@@ -1,0 +1,71 @@
+.header {
+	text-align: center;
+	padding: 60px;
+	color: rgb(200, 186, 186);
+	font-size: 100px;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: 900;
+}
+
+.main {
+	padding-left:200px;
+	justify-content: center;
+}
+
+.sidenav {
+	height: 100%;
+	width: 200px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	overflow-x: hidden;
+	padding-top: 50px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 25px;
+	color: rgb(188, 100, 100);
+	display: block;
+}
+
+.sidenav a:hover {
+	color: rgb(180, 144, 144)
+}
+
+
+.about_text {
+	color:rgb(180, 163, 163);
+	font-size: 32px;
+	padding-left: 60px;
+	padding-top: 30px;
+}
+
+body {
+	background-color: rgb(220, 215, 204);
+}
+
+h2 {
+	color: rgb(50, 45, 45);
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	margin-top:70px;
+	margin-bottom:20px;
+}
+
+.math_text {
+	margin-left: calc(max(50% - 500px, 0px));
+	margin-right: calc(max(50% - 500px, 0px));
+	text-align: justify;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	margin-bottom: 50px;
+}
+
+.statement {
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

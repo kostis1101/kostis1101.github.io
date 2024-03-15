@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Katex</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+	<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+	
+	<div id="sidenav-placeholder"></div>
+	
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+	$.get("../sidebar.html", function(data){
+		$("#sidenav-placeholder").replaceWith(data);
+	});
+	</script>
+	
+	<div class="main">
+		<h2 style="text-align: center;">Simple proof of formula of Eulers Totient Function</h2>
+
+		<div class="math_text">
+			<br>
+			<p>
+				This is a proof of the well known formula for Euler's Totient Function \(\phi(n) = n\left(1 - \frac{1}{p_1}\right)\cdot\cdot\cdot\left(1 - \frac{1}{p_k}\right)\). We are going to start by prooving the following weaker sentence:
+			</p>
+			<p class="statement">
+				If \(a \in \mathbb{N}\) and \(p\) a prime that does not divide \(a\), then \(\phi(p^ka) = \phi(a)p^k\left(1 - \frac{1}{p}\right)\).
+			</p>
+			<u>Proof</u> <br>
+			<p style="margin-left:5%">
+				We know that, by definition of the function \(\phi\), \(\phi(p^ka)\) is equal to the amount of natural number less than p^ka that are coprime to \(p^ka\). In set notation we can write:
+				\[
+					\phi(p^ka) = \#\{ \ x \ | \ (x, p^ka) = 1 \ \land \ 1 \leq x < p^ka\ \}
+				\]
+				Now observe that \((x, p^ka) = 1\) if and only if \((x, p^k) = 1\) and \((x, a) = 1\). So the above set changes to:
+				\[
+					\phi(p^ka) = \#\{ \ x \ | \ (x, p^k) = 1 \ \land \ (x, a) = 1 \ \land \ 1 \leq x < p^ka\ \}
+				\]
+				Now, the amount of numbers that are both comprime to \(p^k\) and \(a\) at the same time is equal to the amount of numbers that are comprime to \(a\) minus the amount of numbers that are not comprime to \(p^k\) but comprime to \(a\). So:
+				\[
+					\phi(p^ka) = \#\{ \ x \ | \ (x, a) = 1 \ \land \ 1 \leq x < p^ka\ \} \ - \ \#\{ \ x \ | \ (x, a) = 1 \ \land \ (x, p^k) \neq 1 \ \land \ 1 \leq x < p^ka\ \} = \#A - \#B
+				\]
+				where \(A\) and \(B\) are the two sets respectively. <br>
+				Since \(p\) is prime and \(x > 0\), \((x, p^k) \neq 1\) is clearly equivalent to \(p | x\). But if \(p | x\) then \(x\) can be writtern in the form of \(mp\) for some natural number \(m\). So for following set equation is true:
+				
+				\[
+					B = \{ \ mp \ | \ (mp, a) = 1 \ \land \ 1 \leq mp < p^ka\ \}
+				\]
+				But, since \(p\) does not divide \(a\), then \((mp, a) = 1\) if and only if \((m, a) = 1\). So:
+				\[
+					B = \{ \ mp \ | \ (m, a) = 1 \ \land \ 1 \leq m < p^{k-1}a\ \}
+				\]
+				Now the size of the above set is quite easy to calculate. Its size only depends on how many \(m\) there exist between \(1\) and \(p^{k-1}a\), such that \((m, a) = 1\). That is clearly \(p^{k - 1}\phi(a)\). So:
+				\[
+					\#B = p^{k - 1}\phi(a)
+				\]
+				In a similar way we can find that the size of \(A\) is:
+				\[
+					\#A = p^k\phi(a)
+				\]
+				So:
+				\[
+					\phi(p^ka) = \#A - \#B = p^k\phi(a) - p^{k - 1}\phi(a) = \phi(a)p^k\left(1 - \frac{1}{p}\right) \qquad \blacksquare
+				\]
+			</p>
+			<br>
+			<p>
+				Now that we have proven the weaker result, we can move on to proving the main sentence. We will do it by induction and specifically we will make use of strong induction. <br>
+				First, by definition \(\phi(1) = 1\). We can also check a few small cases by hand. Now to the induction step. Suppose that the formula honds for all numbers k with \(1 \leq k < n\). Now for \(n\). Choose a prime factor \(p\) of n and suppose that \(p^m\) is the largest power of \(p\) that divides \(n\). Then, \(n = p^mb\) for some \(b\) that is not divisible by \(p\). (Note that \(b\) can also be 1). Now apply the previous result:
+				\[
+					\phi(n) = \phi(p^mb) = \phi(b) p^m \left(1 - \frac{1}{p}\right)
+				\]
+				Since \(b < n\), by the induction hypothesis, \(\phi(b) = b\left(1 - \frac{1}{p_1}\right)\cdot\cdot\cdot\left(1 - \frac{1}{p_s}\right)\), where \(p_1, ..., p_s\) the prime fuctors of \(b\). So:
+				\[
+					\phi(n) = b\left(1 - \frac{1}{p_1}\right)\cdot\cdot\cdot\left(1 - \frac{1}{p_s}\right) \cdot p^m \left(1 - \frac{1}{p}\right)
+				\]
+				But \(b\cdot p^m = n\) and the primes \(p_1, ..., p_s\) are almost all prime factors of \(a\), except for p. Then clearly:
+				\[
+					\phi(n) = n\left(1 - \frac{1}{p}\right)\left(1 - \frac{1}{p_1}\right)\cdot\cdot\cdot\left(1 - \frac{1}{p_s}\right)
+				\]
+				Where \(p_1, ..., p_s, p\) is the complete list of prime factors of \(n\). So the formula is also true for \(n\). Thus, by induction, it must true for all natural numbers.
+			</p>
+		</div>
+	</div>
+</body>

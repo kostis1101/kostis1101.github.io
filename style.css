@@ -31,6 +31,9 @@
 	font-size: 25px;
 	color: rgb(188, 100, 100);
 	display: block;
+	outline-color: rgb(22, 22, 22);
+	outline-width: 1px;
+	outline-style: solid;
 }
 
 .sidenav a:hover {
@@ -39,7 +42,7 @@
 
 
 .about_text {
-	color:rgb(180, 163, 163);
+	color:rgb(0, 0, 0);
 	font-size: 32px;
 	padding-left: 60px;
 	padding-top: 30px;
@@ -68,4 +71,16 @@ h2 {
 	font-weight: bold;
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+#codeblock {
+	display: inline-block;
+	white-space: pre-wrap;
+	padding-left: 30px;
+	padding-right: 70px;
+	margin-left: 50px;
+}
+
+body {
+	background-color: rgb(220, 215, 204);
 }

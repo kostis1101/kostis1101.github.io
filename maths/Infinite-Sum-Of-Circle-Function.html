@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+	<meta charset="UTF-8">
+	<title>Eulers Totient Function - Kostis 1101</title>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="/PrismJS/prismjs.css">
+	
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+
+<body>
+    <div id="sidenav-placeholder"></div>
+	
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+		$.get("../sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+
+    <div class="main">
+        Date: 31.05.2024
+        <h2 style="text-align: center;">An Interesting Infinite Sum Equal to \(2 - \frac{\pi}{2}\)</h2>
+
+        <div class="math_text">
+            <br>
+            <p>
+                I have been interested in infinite sums from when I first found out about them. There is something exciting and mystirious at the same time observing that if you add infinitly many number together they magically end up to a value, especially if that value is related to a well know constant such as \(\pi\). <br>
+                As you can imaging, I have tried - with limited success - to find such infinite sums that converge to a "nice" value. About three of four years ago, when I finally had enough mathematical tool in my toolbox, I started trying out a few ideas. One of the first ideas I had has to do with what I call the semicircle function \(f(x) = \sqrt{1 - x^2}\). This function, when graphed, produces a semicircle of radius 1 around the origin above the x axis. Thus, we can easily calculate it's integral:
+                \[
+                    \int_{-1}^{1} \sqrt{1 - x^2} = \frac{\pi}{2}
+                \]
+                since \(\frac{\pi}{2}\) is the area of the semicircle. <br>
+                The idea then was to find a powerseries expansion of the semicircle function and calculate the integral of the powerseries term by term. This will result in an infinite sum. This is a well know trick that is used i many such cases. For example, to proove that:
+                \[
+                    \sum_{k = 0}^{\infty} \frac{(-1)^k}{2k + 1} = \frac{\pi}{4}
+                \]
+                you calcualte the taylor series of the \(\arctan{x}\) and evaluate it at \(x = 1\). The problem was, calcualting the coefficients of the powerseries expansion of the semicircle function is no easy task!
+            </p>
+            <br>
+            <h3>Setting everyting up</h3>
+            <p>
+                We know from the binomial theorem that:
+                \[
+                    (1 - x)^m = \sum_{n = 0}^m \binom{m}{n}(-1)^n x^n
+                \]
+                Since for \(n > m\), \(\binom{m}{n} = 0\), it turns into an infinite sum:
+                \[
+                    (1 - x)^m = \sum_{n = 0}^\infty \binom{m}{n}(-1)^n x^n
+                \]
+                Turns out that this generalizes to non-integer \(m\). Of course that makes the series divergent in most cases, but for \(-1 < x < 1\), the series converges. So, setting \(m = \frac{1}{2}\) we got:
+                \[
+                    \sqrt{1 - x} = \sum_{n = 0}^\infty \binom{1/2}{n}(-1)^n x^n
+                \]
+                And subsitution \(x^2\) for \(x\):
+                \[
+                    f(x) = \sqrt{1 - x^2} = \sum_{n = 0}^\infty \binom{1/2}{n}(-1)^n x^{2n}
+                \]
+                That's the powerseries expansion of the semicircle function! We are done, right? We just need to integrate... <br>
+                Ok, the powerseries expansion is a bit aggly. The problem is that \(\binom{1/2}{n}\). That was the problem and the difficulty all along. Calculating the binomial coefficient with non integer parameters doesn't really make any sense from a combinatorics perspective. And just subsituting everything for the gamma function, which generatizes the factorial, is neither satisfying nor easy to work with. We need another way.
+            </p>
+            <br>
+            <h3>A Breakthrough?</h3>    
+            <p>
+                I was playing around with a completly unrelated but nonetheless interesting combinatorics problem conserning binary trees (I might upload something on that if anything interesting comes out of it), when I noticed something. We can find a nice, closed equation to \(\binom{1/2}{n}\), given that n is a integer. In this case that is pretty much what we want. Observe the following:
+                \[
+                    \left(\frac 1 2\right)! = \left(\frac 1 2 - 1\right)!\cdot \frac{1}{2} = \cdot\cdot\cdot = \left(\frac 1 2 - n\right)!\left(\frac 1 2 - n + 1\right)\left(\frac 1 2 - n + 2\right)\cdot\cdot\cdot\frac 1 2
+                \]
+                And so:
+                \[
+                    \begin{flalign*}
+                        \binom{1/2}{n} = \frac{\left(\frac 1 2\right)!}{n!\left(\frac 1 2 - n\right)!} &= \frac{\left(\frac 1 2 - n\right)!\frac 1 2\left(1 - \frac 1 2\right)\cdot\cdot\cdot\left(\frac 1 2 - n + 1\right)}{n!\left(\frac 1 2 - n\right)!} \\ \\
+                            &= \frac{\frac 1 2\left(1 - \frac 1 2\right)\cdot\cdot\cdot\left(\frac 1 2 - n + 1\right)}{n!} \\
+                            &= \frac{2^n\frac 1 2\left(1 - \frac 1 2\right)\cdot\cdot\cdot\left(\frac 1 2 - n + 1\right)}{2^n \cdot n!} \\ \\
+                            &= \frac{1\cdot(2 - 1)\cdot\cdot\cdot(1 - 2n + 2)}{2^n \cdot n!} \\ \\
+                            &= \frac{1\cdot(2 - 1)\cdot\cdot\cdot(3 - 2n)}{2^n \cdot n!} \\ \\
+                            &= \frac{1(-1)(-3)\cdot\cdot\cdot(3 - 2n)}{2^n \cdot n!} \\ \\
+                            &= \frac{(-1)^{n - 1}\cdot1\cdot3\cdot5\cdot\cdot\cdot(2n - 3)}{2^n \cdot n!} \\ \\
+                            &= \frac{(-1)^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(2n - 3)}{2^n \cdot n!\cdot2\cdot4\cdot6\cdot\cdot\cdot(2n - 4)} \\ \\
+                            &= \frac{(-1)^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(2n - 3)(2n - 2)}{2^n \cdot n!\cdot2\cdot4\cdot6\cdot\cdot\cdot(2n - 4)(2n - 2)} \\ \\
+                            &= \frac{(-1)^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(2n - 3)(2n - 2)}{2^n \cdot n!2^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(n - 2)(n - 1)} \\ \\
+                            &= \frac{(-1)^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(2n - 3)(2n - 2)}{2^n \cdot n!2^{n - 1}\cdot1\cdot2\cdot3\cdot\cdot\cdot(n - 2)(n - 1)} \\ \\
+                            &= \frac{(-1)^{n - 1}(2n - 2)!}{2^{2n - 1} \cdot n!(n - 1)!} \\ \\
+                            &= \frac{(-1)^{n - 1}(2n - 2)!n}{2^{2n - 1} \cdot n!n!} \\ \\
+                            &= \frac{(-1)^{n - 1}(2n)!n}{2^{2n - 1} \cdot n!n!(2n - 1)(2n)} \\ \\
+                            &= \frac{(-1)^{n - 1}(2n)!}{2^{2n} \cdot (n!)^2(2n - 1)} \\ \\
+                            &= \frac{(-1)^{n - 1}}{2^{2n}(2n - 1)} \binom{2n}{n}
+                    \end{flalign*}
+                \]
+                Ok that was a lot, I admit, but we found a solution. We can now express \(\binom{1/2}{n}\) as the above last expression.
+            </p>
+            <br>
+            <h3>Applying the integral</h3>
+            So, the semicircle function becames:
+            \[
+                \begin{flalign*}
+                    f(x) = \sqrt{1 - x^2} &= \sum_{n = 0}^\infty \frac{(-1)^{n - 1}}{2^{2n}(2n - 1)} \binom{2n}{n} (-1)^n x^{2n} \\
+                        &= -\sum_{n = 0}^\infty \frac{x^{2n}}{2^{2n}(2n - 1)} \binom{2n}{n}
+                \end{flalign*}
+            \]
+            And so:
+            \[
+                \begin{flalign*}
+                    \int_{-1}^1 f(x) \ dx &= -\int_{-1}^1 \sum_{n = 0}^\infty \frac{x^{2n}}{2^{2n}(2n - 1)} \binom{2n}{n} \ dx \\
+                        &= -\sum_{n = 0}^\infty \frac{\int_{-1}^1 x^{2n}\ dx}{2^{2n}(2n - 1)} \binom{2n}{n} \\
+                        &= -\sum_{n = 0}^\infty \frac{\frac{2}{2n + 1}}{2^{2n}(2n - 1)} \binom{2n}{n} \\
+                        &= -\sum_{n = 0}^\infty \frac{1}{2^{2n - 1}(2n - 1)(2n + 1)} \binom{2n}{n}
+                \end{flalign*}
+            \]
+            This yields:
+            \[
+                \sum_{n = 0}^\infty \frac{1}{2^{2n - 1}(2n - 1)(2n + 1)} \binom{2n}{n} = - \frac{\pi}{2}
+            \]
+            or equivalently:
+            \[
+                \sum_{n = 0}^\infty \frac{(2n)!}{2^{2n - 1}(n!)^2(2n - 1)(2n + 1)} = - \frac{\pi}{2}
+            \]
+            whatevery you prefer. We can also multiply the equation by 2 and calculate the first term for \(n = 0\), which will give us:
+            \[
+                1 - \sum_{n = 1}^\infty \frac{(2n)!}{2^{2n}(n!)^2(2n - 1)(2n + 1)} = \frac{\pi}{4}
+            \]
+            and so:
+            \[
+                \sum_{n = 1}^\infty \frac{(2n)!}{2^{2n}(n!)^2(2n - 1)(2n + 1)} = 1 - \frac{\pi}{4}
+            \]
+            or equivalently:
+            \[
+                \sum_{n = 1}^\infty \frac{1}{2^{2n}(2n - 1)(2n + 1)} \binom{2n}{n} = 1 - \frac{\pi}{4}
+            \]
+        </div>
+    </div>
+</body>

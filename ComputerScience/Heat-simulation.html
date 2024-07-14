@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+	<meta charset="UTF-8">
+	<title>Heat simulation - Kostis 1101</title>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="/PrismJS/prismjs.css">
+	
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+	<div id="sidenav-placeholder"></div>
+	
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+		$.get("../sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+    <div class="main">
+        Date: 14.07.2024
+		<h2 style="text-align: center;">Heating and Cooling a plate from both sides</h2>
+        <div class="math_text">
+            <br>
+            <p>
+                I recently wrote a heat equation simulation. I mainly followed <a href="https://youtu.be/KrdO-6B8Stg?list=PLAZp3rbgWLo1ZKxqNzl04oaQhpbv_5mg9">a lecture of Niels Berglund</a>. I wrote the programme in C++ and used opencv for saving the frames to the disc.
+            </p>
+            <br>
+            <h3>The heat equation</h3>
+            <p>
+                The heat equation is the following second order partial differencial equation (for the 2D case):
+                \[
+                    \partial_t u = \alpha\Delta u
+                \]
+                where u is the tempreture. <br>
+                Let \(u_{t, x, y}\) be the tempreture at time \(t\) and point \((x, y)\). Since the indecies get messy fast, we will only show the ones that are changing (e.g. we will write \(u_{y + \Delta y}\) instead of \(u_{t, x, y + \Delta y}\)). To discritize the equation, we set a small time and space step \(\Delta t\) and \(\Delta s\). The partial derivative in terms of space and time can be approximated as follows:
+                \[
+                    \begin{flalign*}
+                        &\qquad\bullet\quad \partial_t u \approx \frac{u_{t + \Delta t} - u_t}{\Delta t} && \\
+                        &\qquad\bullet\quad \partial_{xx} u \approx \frac{u_{x + \Delta x} + u_{x - \Delta x} - 2 u_x}{\Delta x} && \\
+                        &\qquad\bullet\quad \partial_{yy} u \approx \frac{u_{y + \Delta y} + u_{y - \Delta y} - 2 u_{y}}{\Delta x}
+                    \end{flalign*}
+                \]
+                Applying the heat equation and solving for \(u_{t + \Delta t, x, y}\) we have:
+                \[
+                    u_{t + \Delta t} = u + \frac{\alpha\Delta t}{\Delta x^2} \left(u_{x + \Delta x} + u_{x - \Delta x} + u_{y + \Delta y} + u_{y - \Delta y} - 4 u\right)
+                \]
+                For more details and an indepth explanation (and because it is really interesting) watch Nils Berglund's video.
+            </p>
+            <br>
+            <h3>Implementation</h3>
+            <p>
+                I found that for relativly big values of \(\frac{\alpha\Delta t}{\Delta x^2}\), having one 2D array and applying the simulation on it every time step produced unstable results. There are ways to increase stability there, but I want with the easy and lazy way of craeting two 2D arrays, one holding the tempreture values from the previous time step and the other for the next. In other words, I used the data from the array with the previous values to calcualte the data for the array with the next values. To avoid copying the data from one array to the other every time step, the roles of each array are simply switch every time step.
+            </p>
+            <p>
+                When it comes to boundry conditions, there is alot one can do. The simplest form is a perfect insulating simulation, there the heat is trapped in the simulation world and cannot escape it. This is achived by setting the tempreture of cell right outside the boundary cell equal to the tempreture of that boundary cell. Another idea is to keep the tempreture of same of the boundry cells constant. This is like "heating" or "cooling" a plate from outside by touching a heating or cooling source with constant tempreture. A mixure of the above mentioned boundary conditions is the following simulation: <br>
+                <div>
+                    <iframe width="600" height="360" src="https://www.youtube.com/embed/nure1Qxekk0" title="Heating and cooling a plate from opposite sides" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display: block; margin: auto"></iframe>
+                </div>
+                <br>
+                Another possibility is to use periodic boundary conditions. The following is the result of having two hot and two cold plates exchanging heat with periodic boundary conditions: <br>
+                <div style="margin-top: 20px">
+                    <iframe width="600" height="320" src="https://www.youtube.com/embed/rEJMFGSqhO0" title="Heat exchange between four plates" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display: block; margin: auto"></iframe>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>

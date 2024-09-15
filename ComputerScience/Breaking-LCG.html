@@ -30,7 +30,7 @@
 		<div class="math_text">
 			<br>
 			<p>
-				Recently, through a crytpography course I am taking, I found out about the <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">Linear Congruential Pseudorandom Number Generator (LCG)</a>. It is a simple and really fast pseudorandom number generator perfect for applications where privacy and security are not needed. This is because it can be broken quite easily and thus be predictable. So that's what we are going to to today. We are going to (at least attempt to) break a LCG.
+				Recently, through a cryptography course I am taking, I found out about the <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">Linear Congruential Pseudorandom Number Generator (LCG)</a>. It is a simple and really fast pseudorandom number generator perfect for applications where privacy and security are not needed. This is because it can be broken quite easily and thus be predictable. So that's what we are going to to today. We are going to (at least attempt to) break a LCG.
 			</p>
 			<br>
 			<h3>Introduction</h3>
@@ -40,17 +40,17 @@
 				\[
 				x_{n + 1} = ax_n + b \mod N
 				\]
-				where \(x0\), \(a\), \(b\) and \(N\) can be considered part of the seed. In most implementations, however, \(a\), \(b\) and \(N\) are constant and not part of the seed, chosen to optimize for the best possible distrubution. For example, most of the times \(N\) is either prime or a power of 2 and a and b are coprime to \(N\).
+				where \(x0\), \(a\), \(b\) and \(N\) can be considered part of the seed. In most implementations, however, \(a\), \(b\) and \(N\) are constant and not part of the seed, chosen to optimize for the best possible distribution. For example, most of the times \(N\) is either prime or a power of 2 and a and b are coprime to \(N\).
 			</p>
 			<p>
-				To understand why the LCG is not safe and to try to brake it, we first need to know what does it mean for a pseudorandom number generator to safe in the first place. This is a bit technical and you can read about it more <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator#Definitions">here</a>, but the overall idea is this: A pseudorandom number generator is safe, if there does not exist any polynomial time algorithm \(A\) that can distinguish between a pseudorandomly generated sequance of numbers from a truely random sequence of numbers. <br>
+				To understand why the LCG is not safe and to try to brake it, we first need to know what does it mean for a pseudorandom number generator to safe in the first place. This is a bit technical and you can read about it more <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator#Definitions">here</a>, but the overall idea is this: A pseudorandom number generator is safe, if there does not exist any polynomial time algorithm \(A\) that can distinguish between a pseudorandomly generated sequence of numbers from a truly random sequence of numbers. <br>
 				An interesting observation one can make is that if a pseudorandom number generator is safe, that essentially means that it can not be reversed very easily. In other words, the problem of computing the pseudorandom numbers from a seed is easy, but the reverse (computing the seed from a pseudorandom sequence) in hard. That reminds me of hash functions. Is there any similarity between them? Since I am not familiar with this topic, I am not sure.
 			</p>
 			
 			<br>
 			<h3>Implementing the LCG</h3>
 			<p>
-				For the perpuses of breaking the LCG, we are going to implement it in python. I used a generator to generate the sequence. The code is the following:
+				For the purpose of breaking the LCG, we are going to implement it in python. I used a generator to generate the sequence. The code is the following:
 				<pre id="codeblock">
 					<code class="language-python">
 def lcg(x0, a, b, N):
@@ -96,7 +96,7 @@ def lcg(x0, a, b, N):
 				\[
 					N \ | \ y_ny_{n + 2} - y^2_{n + 1}
 				\]
-				It might not seem that important, but what we have done is quite remarkable. We have managed to end up with a relation that just includes \(N\), without any of the other unknowns. Not only that, but the possiblilities for \(N\) are finite! This is really important, since, if we know \(N\) then we know the modulo congruence of the LCG and calculating \(a\) is a matter of finding the multiplicative inverse of \(y_0\) in the field \(\mathbb{Z}/N\mathbb{Z}\) (more on that later).
+				It might not seem that important, but what we have done is quite remarkable. We have managed to end up with a relation that just includes \(N\), without any of the other unknowns. Not only that, but the possibilities for \(N\) are finite! This is really important, since, if we know \(N\) then we know the modulo congruence of the LCG and calculating \(a\) is a matter of finding the multiplicative inverse of \(y_0\) in the field \(\mathbb{Z}/N\mathbb{Z}\) (more on that later).
 			</p>
 			<p>
 				But, we have a problem... We have not found the exact value of \(N\), but rather a relation that it should satisfy. To be exact, we have \(k - 2\) divisibility relations it must satisfy:
@@ -114,13 +114,13 @@ def lcg(x0, a, b, N):
 				\]
 			</p>
 			<p>
-				A few things to note here. First, if the above \(\gcd\) is 1, since \(N > 1\), that is a contradiction. In that case, that means that the given sequence can not be generated from a LCG. Secondly, if all \(\{z\}_n\) are \(0\), then we cannot deduce any information about \(N\). Simply put, \(N\) could be anything above the biggest number of the given sequence. This happends for example with the sequence of powers of \(2\). If we only knew the first 9 terms of the sequence \(2,\ 4,\ 8,\ ...,\ 512\), there is no way to know what \(N\) is. It could be 513 or it could be anything bigger than that.
+				A few things to note here. First, if the above \(\gcd\) is 1, since \(N > 1\), that is a contradiction. In that case, that means that the given sequence can not be generated from a LCG. Secondly, if all \(\{z\}_n\) are \(0\), then we cannot deduce any information about \(N\). Simply put, \(N\) could be anything above the biggest number of the given sequence. This happens for example with the sequence of powers of \(2\). If we only knew the first 9 terms of the sequence \(2,\ 4,\ 8,\ ...,\ 512\), there is no way to know what \(N\) is. It could be 513 or it could be anything bigger than that.
 			</p>
 
 			<br>
 			<h3>Breaking LCG</h3>
 			<p>
-				So far we have figured out a restriction for \(N\). That might be the correct solution, but it might also not be. We know that \(N\) must divide the \(\gcd(z_0,\ z_1,\ ..., \ z_{k - 2})\). So, let's take a guess. Let's ingore the problem for a bit and suppose, for now, that \(N = \gcd(z_0,\ z_1,\ ..., \ z_{k - 2})\) is the correct solution. Now, all we need to find is the remaining two coefficients \(a\) and \(b\). Let us first focus on \(a\).
+				So far we have figured out a restriction for \(N\). That might be the correct solution, but it might also not be. We know that \(N\) must divide the \(\gcd(z_0,\ z_1,\ ..., \ z_{k - 2})\). So, let's take a guess. Let's ignore the problem for a bit and suppose, for now, that \(N = \gcd(z_0,\ z_1,\ ..., \ z_{k - 2})\) is the correct solution. Now, all we need to find is the remaining two coefficients \(a\) and \(b\). Let us first focus on \(a\).
 			</p>
 			<p>
 				The question is: Given a sequence \(\{y\}_n\), for which \(a\) is the recursive relation \(y_{n+1} \equiv ay_n \pmod{N}\) satisfied?<br>
@@ -143,12 +143,12 @@ def lcg(x0, a, b, N):
 				\[
 					u_k = (ky_0) \bmod{N}
 				\]
-				So \(u\) is the sequence of all mutliples of \(y_0\) in \(\mathbb{Z}_N\):
+				So \(u\) is the sequence of all multiples of \(y_0\) in \(\mathbb{Z}_N\):
 				\[
 					u:\ \left(0,\ y_0,\ 2y_0,\ 3y_0,\ ...,\ (N - 1)y_0\right)
 				\]
 				We are essentially trying to find \(y_1\) in the above sequence. That is because \(y_1\) is a multiple of \(y_0\) in \(\mathbb{Z}_N\) and \(u\) is the sequence of all such mutliples. Then, \(a\) will be the coefficient of this element of the sequence.<br>
-				It is quite easy to see that the sequence \(u\) repeats itself with a period of \(\frac{N}{d}\), where \(d = \gcd(y_0, N)\). This is because \(\frac{N}{d}y_0\) is the smallest positive multiple of \(y_0\) that is \(0 \pmod{N}\). After \(\frac{N}{d}y_0\) the sequence \(u\) repeats itself from the beginning. So if we can find \(y_1\) in the sequence (i.e. if there is a solution for \(a\)), then we can find it mulitple times (specifically \(d\) times).
+				It is quite easy to see that the sequence \(u\) repeats itself with a period of \(\frac{N}{d}\), where \(d = \gcd(y_0, N)\). This is because \(\frac{N}{d}y_0\) is the smallest positive multiple of \(y_0\) that is \(0 \pmod{N}\). After \(\frac{N}{d}y_0\) the sequence \(u\) repeats itself from the beginning. So if we can find \(y_1\) in the sequence (i.e. if there is a solution for \(a\)), then we can find it multiple times (specifically \(d\) times).
 			</p>
 			<p>
 				So, if \(y_1\) appears in the sequence \(u\), it will appear each time the sequence repeats. So, it will also appear in the first repetition. The period of the repetition is \(\frac{N}{d}\) and thus \(y_1\) will be in the sequence \(\left(0,\ y_0,\ 2y_0,\ 3y_0,\ ...,\ \left(\frac{N}{d} - 1\right)y_0\right)\) and \(0 \leq a \leq \frac{N}{d} - 1\).
@@ -163,7 +163,7 @@ def lcg(x0, a, b, N):
 						\Longleftrightarrow\quad &a\frac{y_0 }{d} \equiv \frac{y_1}{d} \mod{\frac{N}{d}}
 					\end{flalign*}
 				\]
-				So if there exists an \(a\) such that \(ay_0 \equiv y_1 \pmod{N}\) then equivalently \(a\frac{y_0}{d} \equiv \frac{y_1}{d}\ \left(\text{mod}\ \frac{N}{d}\right)\). But \(d = \gcd(y_0, N)\) and thus \(\gcd(\frac{y_0}{d}, \frac{N}{d}) = 1\). But then \(\frac{y_0}{d}\) has a mutliplicative inverse in \(\mathbb{Z}_{N/d}\). That inverse we can calculate with the extended euclidean algorithm. And thus:
+				So if there exists an \(a\) such that \(ay_0 \equiv y_1 \pmod{N}\) then equivalently \(a\frac{y_0}{d} \equiv \frac{y_1}{d}\ \left(\text{mod}\ \frac{N}{d}\right)\). But \(d = \gcd(y_0, N)\) and thus \(\gcd(\frac{y_0}{d}, \frac{N}{d}) = 1\). But then \(\frac{y_0}{d}\) has a multiplicative inverse in \(\mathbb{Z}_{N/d}\). That inverse we can calculate with the extended euclidean algorithm. And thus:
 				\[
 					a \equiv \left(\frac{y_0}{d}\right)^{-1}\frac{y_1}{d} \quad \left(\text{mod}\ \frac{N}{d}\right)
 				\]
@@ -207,10 +207,10 @@ def lcg(x0, a, b, N):
 				\[
 					y_{n + 1} \equiv ay_n \pmod{N}
 				\]
-				So, the value for \(a\) we found previously, also works for all possible values of \(N\) and not just \(G\). As we essensially know a solution for \(a\), we just need to find the correct value of \(N\). This will be done with a "correction step". The idea is the following:
+				So, the value for \(a\) we found previously, also works for all possible values of \(N\) and not just \(G\). As we essentially know a solution for \(a\), we just need to find the correct value of \(N\). This will be done with a "correction step". The idea is the following:
 			</p>
 			<p>
-				Start with \((x_0,\ a,\ b,\ N = G)\). Then, based on those parameters calculate the first k elements the LCG (remember that k is the amount of elements we where given) and compare them with the given sequence \(\{x\}_n\). If there is a difference, then change \(N\), so that the elements become equal \(\bmod{N}\). After treversing the whole list of elements, checking them with the given sequence and correcting if necessary, we will end up with a new set of parameters for which the LCG will generate an identical sequence the one we were given. The final value of \(N\) will be the value we are looking for.<br>
+				Start with \((x_0,\ a,\ b,\ N = G)\). Then, based on those parameters calculate the first k elements the LCG (remember that k is the amount of elements we where given) and compare them with the given sequence \(\{x\}_n\). If there is a difference, then change \(N\), so that the elements become equal \(\bmod{N}\). After traversing the whole list of elements, checking them with the given sequence and correcting if necessary, we will end up with a new set of parameters for which the LCG will generate an identical sequence the one we were given. The final value of \(N\) will be the value we are looking for.<br>
 				Below we have pseudocode for this algorithm:				
 			</p>
 			<pre id="codeblock">
@@ -234,7 +234,7 @@ b = b % N</code>
 				If we find a difference \(s_i \neq x_i\) then we change \(N = s_i - x_i\). This works, because we know, that the correct value for \(N\) divides the one we have and that it needs to be \(s_i \equiv x_i \pmod{N} \ \Longleftrightarrow \ N \ | \ s_i - x_i\). And so \(s_i - x_i\) is the biggest number that satisfies both properties.
 			</p>
 			<p>
-				One can easily show that, if \(s_i \neq x_i\) then \((s_i - x_i) \ | \ N\). So every correction on \(N\) reduces it to one of its divisors. That's why the correction step is consistant with the restriction that \(N \ | \ G\). Every time we "correct" \(N\), this remains true. And thus, we end up with a set of values \((a,\ b,\ N)\) which generate an identical sequence to the one given. 
+				One can easily show that, if \(s_i \neq x_i\) then \((s_i - x_i) \ | \ N\). So every correction on \(N\) reduces it to one of its divisors. That's why the correction step is consistent with the restriction that \(N \ | \ G\). Every time we "correct" \(N\), this remains true. And thus, we end up with a set of values \((a,\ b,\ N)\) which generate an identical sequence to the one given. 
 			</p>
 			
 			<br>
@@ -267,9 +267,9 @@ for i between 0 and k - 1:
 		G = gcd(D, z_i)
 
 if G == 0:
-	We don't have enought information to conclude anything about N
+	We don't have enough information to conclude anything about N
 
-// Calcualating the remaining parameters
+// Calculating the remaining parameters
 d = gcd(y[0], G)
 a = (inv(y[0] / d, G / d) * (y[1] / d)) % (G / d)
 b = (x[1] - a * x[0]) % G
@@ -330,16 +330,16 @@ return a, b, N</code>
 				<output id="generating_output"></output>
 				<script>
 					function generate_lcg() {
-						let x0 = document.getElementById("input_x0").value;
-						let a = document.getElementById("input_a").value;
-						let b = document.getElementById("input_b").value;
-						let N = document.getElementById("input_N").value;
-						let k = document.getElementById("input_k").value;
+						let x0 = parseInt(document.getElementById("input_x0").value);
+						let a = parseInt(document.getElementById("input_a").value);
+						let b = parseInt(document.getElementById("input_b").value);
+						let N = parseInt(document.getElementById("input_N").value);
+						let k = parseInt(document.getElementById("input_k").value);
 						
 						let s = "Generated LCG sequence: " + x0 + " ";
 						for (let i = 1; i < k; i++) {
 							x0 = (a * x0 + b) % N;
-							s += x0 + " ";
+							s += String(x0) + " ";
 						}
 
 						document.getElementById("generating_output").value = s;
@@ -402,14 +402,21 @@ return a, b, N</code>
 
 				function break_lcg() {
 					let sequence = document.getElementById("lcg_sequence").value;
-					let s = sequence.split(",");
-
+					let s = sequence.split(" ");
 					let x = [];
+
 					for (i in s) {
 						if (s[i] != "") {
-							x.push(Number(s[i]));
+							let n = parseInt(s[i]);
+							if (isNaN(n)) {
+								alert("Failed to parse input. Make sure that the numbers are of the correct form.");
+								return;
+							}
+							x.push(n);
 						}
 					}
+
+					console.log(x);
 
 					let k = x.length;
 

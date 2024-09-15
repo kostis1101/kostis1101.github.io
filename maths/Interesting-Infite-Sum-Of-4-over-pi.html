@@ -70,11 +70,11 @@
 			\[
 				V = \lim_{\theta\to0} \sqrt{2}\sum_{k=0}^{\pi/\theta}\frac{\theta}{\pi}\sqrt{1-\cos(k\theta)}
 			\]
-			This can also be written as an intergral:
+			This can also be written as an integral:
 			\[
 				V = \sqrt{2}\int_{0}^{\pi}\sqrt{1-\cos(\theta)}\ \frac{d\theta}{\pi}
 			\]
-			We can solve the integral with some standart intergration technics:
+			We can solve the integral with some standard integration technics:
 			\[
 				V = \frac{\sqrt{2}}{\pi}\int_{0}^{\pi}\sqrt{1-\cos{\theta}}\ d\theta
 			\]
@@ -105,17 +105,17 @@
 				\Longleftrightarrow V &= \frac{4}{\pi}
 				\end{flalign}
 			\]
-			Writting \(V\) as the infinite sum we found:
+			Writing \(V\) as the infinite sum we found:
 			\[
 				\lim_{n\to\infty}\sum_{k=0}^n\frac{\sqrt2\sqrt{1-\cos\left(\frac{k\pi}{n}\right)}}{n}=\frac{4}{\pi}
 			\]
 			<h3> A General Case </h3>
-			Lets see what happens when we evaluate the same sum, but instead of \(\pi\), we have an arbitury angle \(\alpha\). This we be a function of \(\alpha\) that we can plot:
+			Lets see what happens when we evaluate the same sum, but instead of \(\pi\), we have an arbitrary angle \(\alpha\). This we be a function of \(\alpha\) that we can plot:
 			\[
 				V(\alpha)=\lim_{n\to\infty}\sum_{k=0}^n\frac{\sqrt2\sqrt{1-\cos\left(\frac{k\alpha}{n}\right)}}{n}
 			\]
 			<img src="files/Interesting-Infite-Sum-Of-4-over-pi/convergence.png" style="max-width: 80%; margin-left:10%; margin-top:20px; margin-bottom: 20px;"> <br>
-			The cyan curve is the function \(V(\alpha)\) and the pink curve is the line \(y=\frac{4}{\pi}x\). It seams that \(V(\alpha)\) converges to \(\frac{4}{\pi}\) as \(\alpha\to+\infty\). To proove that, we can construct the integral like before:
+			The cyan curve is the function \(V(\alpha)\) and the pink curve is the line \(y=\frac{4}{\pi}x\). It seams that \(V(\alpha)\) converges to \(\frac{4}{\pi}\) as \(\alpha\to+\infty\). To prove that, we can construct the integral like before:
 			Let \(\theta=\frac{\alpha}{n} \Rightarrow n = \frac{\alpha}{\theta}\):
 			\[
 				V(\alpha)=\frac{\sqrt2}{\alpha}\lim_{n\to\infty}\sum_{k=0}^{\alpha/\theta}\theta\sqrt{1-\cos(k\theta)}
@@ -124,7 +124,7 @@
 			\[
 				V(\alpha)=\frac{\sqrt2}{\alpha}\int_0^\alpha\sqrt{1-\cos\theta}\ d\theta
 			\]
-			Like in the case of \(\alpha=\pi\), we can proove that the above integral is equal to:
+			Like in the case of \(\alpha=\pi\), we can prove that the above integral is equal to:
 			\[
 				V(\alpha) = \frac{2}{\alpha}\int_0^\alpha\left|\sin\frac{\theta}{2}\right|\ d\theta
 				\]
@@ -156,7 +156,7 @@
 			\[
 				V(\alpha)=\frac{4}{\alpha}\left[2p+\left|\int_{p\pi}^{\alpha/2}\sin\theta\ d\theta\right|\right], \ \ (1)
 				\]
-			Since \(p\) is the biggerst integer s.t. \(p\pi\le\alpha/2\), the following inequality should also be true:
+			Since \(p\) is the biggest integer s.t. \(p\pi\le\alpha/2\), the following inequality should also be true:
 			\[
 				\begin{flalign}
 				p\pi &\le\frac{\alpha}{2}<(p+1)\pi\\

@@ -29,19 +29,19 @@
         <div class="math_text">
             <br>
             <p>
-                We are going to proove the well known formula for Euler's Totient Function: \(\phi(n) = n\prod_{p_i}\left(1 - \frac{1}{p_i}\right)\), where \(p_i\) are the distinct prime factors of \(n\).
+                We are going to prove the well known formula for Euler's Totient Function: \(\phi(n) = n\prod_{p_i}\left(1 - \frac{1}{p_i}\right)\), where \(p_i\) are the distinct prime factors of \(n\).
             </p>
             <p>
-                To proove the result, we need to proove two things first: One, that \(\phi(p^k) = p^k\left(1 - \frac{1}{p}\right)\) for all prime powers \(p^k\) and two, that \(\phi(ab) = \phi(a)\phi(b)\) whenever \(\gcd(a, b) = 1\). From now on the gcd is going to be written as simple parethmesis: \((a, b) = 1\).
+                To prove the result, we need to prove two things first: One, that \(\phi(p^k) = p^k\left(1 - \frac{1}{p}\right)\) for all prime powers \(p^k\) and two, that \(\phi(ab) = \phi(a)\phi(b)\) whenever \(\gcd(a, b) = 1\). From now on the gcd is going to be written as simple parenthesis: \((a, b) = 1\).
             </p>
             <p>
-                The first of the two lemmas is quite easy to proove algebraically. In this case we will consern ourself with the second lemma, which we are going to proove geometrically.
+                The first of the two lemmas is quite easy to prove algebraically. In this case we will concern ourself with the second lemma, which we are going to prove geometrically.
             </p>
             
             <br>
             <h3>Geometric Proof of the second lemma</h3>
             <p>
-                We want to proove that if \((a, b) = 1\) then \(\phi(ab) = \phi(a)\phi(b)\). Remaimber that \(\phi(n)\) counts the amount of numbers that are coprime to \(n\) that are smaller or equal to \(n\). The idea is to map all natural numbers from \(1\) to \(ab\) to lattice points in a 2-dimensional space such that it is easy to then count the numbers that are coprime to \(ab\). The mapping itself is quite simple: Every number \(m \in \{1, 2, ..., ab\}\) will be mapped to \((x, y)\), where \(0 \leq x < a\), \(0 \leq y < b\) and the following system if satified:
+                We want to prove that if \((a, b) = 1\) then \(\phi(ab) = \phi(a)\phi(b)\). Remainder that \(\phi(n)\) counts the amount of numbers that are coprime to \(n\) that are smaller or equal to \(n\). The idea is to map all natural numbers from \(1\) to \(ab\) to lattice points in a 2-dimensional space such that it is easy to then count the numbers that are coprime to \(ab\). The mapping itself is quite simple: Every number \(m \in \{1, 2, ..., ab\}\) will be mapped to \((x, y)\), where \(0 \leq x < a\), \(0 \leq y < b\) and the following system if satisfied:
                 \[
                     \begin{cases}
                         m \equiv x \pmod{a} \\
@@ -51,13 +51,13 @@
                 In other words, \(x\) is the remainder of \(m : a\) and \(y\) thee remainder of \(m : b\).
             </p>
             <p>
-                Now observe the following: For every natural number \(m\), \((m, ab) = 1\) if and only if \((m, a) = 1\) and \((m, b) = 1\). But \((m, a) = (x, a)\) and \((m, b) = (y, b)\). Thus \((m, ab) = 1\) if and only if \((x, a) = 1\) and \((y, b) = 1\). Taking the cotrposition of the previous equivalence, this tells us that \((m, ab) > 1\) if and only if either \((x, a) > 1\) or \((y, b) > 1\). Now taking all the points in the \(a \times b\) lattice, we want to remove all those points that corrispond to numbers \(m\) that are not coprimes to \(ab\). But if \(m\) is not coprime to \(ab\), then at least one of the coordinates of that corrisponding point \((x, y)\) will be not coprime to \(a\) or \(b\) respectively. So, instead of removing all points whose corrisponding number is not coprime to \(ab\), we can equivalently remove all points \((x, y)\) for which either \(x\) is not coprime to \(a\) or y is not coprime to \(b\) (or both of course). This will result in removing whole rows and collumns from the lattice.
+                Now observe the following: For every natural number \(m\), \((m, ab) = 1\) if and only if \((m, a) = 1\) and \((m, b) = 1\). But \((m, a) = (x, a)\) and \((m, b) = (y, b)\). Thus \((m, ab) = 1\) if and only if \((x, a) = 1\) and \((y, b) = 1\). Taking the contraposition of the previous equivalence, this tells us that \((m, ab) > 1\) if and only if either \((x, a) > 1\) or \((y, b) > 1\). Now taking all the points in the \(a \times b\) lattice, we want to remove all those points that correspond to numbers \(m\) that are not coprimes to \(ab\). But if \(m\) is not coprime to \(ab\), then at least one of the coordinates of that corresponding point \((x, y)\) will be not coprime to \(a\) or \(b\) respectively. So, instead of removing all points whose corresponding number is not coprime to \(ab\), we can equivalently remove all points \((x, y)\) for which either \(x\) is not coprime to \(a\) or y is not coprime to \(b\) (or both of course). This will result in removing whole rows and columns from the lattice.
             </p>
             <p>
-                But how many rows and collumns do we remove? Well, lets focus on collumns first. A collumn consists of points with the same x-coordinate. The collumn will be removed if this shared x-coordinate is not coprime to \(a\). But, there are a total of \(\phi(a)\) numbers between \(0\) and \(a - 1\) that are coprime to \(a\). So the rest are not corpime to \(a\) and so the respective collumns with that x-coordinate will be removed. This means that in total \(a - \phi(a)\) collumns will be removed, and \(\phi(a)\) will remain. Applying the same logic to the y-axis, where we work \(\bmod{b}\), the rows that will be removed are \(b - \phi(b)\), and so there will be \(\phi(b)\) rows remaining.
+                But how many rows and columns do we remove? Well, lets focus on columns first. A column consists of points with the same x-coordinate. The column will be removed if this shared x-coordinate is not coprime to \(a\). But, there are a total of \(\phi(a)\) numbers between \(0\) and \(a - 1\) that are coprime to \(a\). So the rest are not corpime to \(a\) and so the respective columns with that x-coordinate will be removed. This means that in total \(a - \phi(a)\) columns will be removed, and \(\phi(a)\) will remain. Applying the same logic to the y-axis, where we work \(\bmod{b}\), the rows that will be removed are \(b - \phi(b)\), and so there will be \(\phi(b)\) rows remaining.
             </p>
             <p>
-                After the removing procedure, we are left with \(\phi(b)\) rows and \(\phi(a)\) collumns of points. As we've seen already, these points corrispond to exactly all numbers between \(1\) and \(ab\) that are coprime to \(ab\). And since these are organized in \(\phi(a)\) collumns and \(\phi(b)\) rows, the total number of remaining points, and thus the total number of coprime integers between \(1\) and \(ab\), is \(\phi(a)\phi(b)\). Thus prooving that \(\phi(ab) = \phi(a)\phi(b)\).
+                After the removing procedure, we are left with \(\phi(b)\) rows and \(\phi(a)\) columns of points. As we've seen already, these points correspond to exactly all numbers between \(1\) and \(ab\) that are coprime to \(ab\). And since these are organized in \(\phi(a)\) columns and \(\phi(b)\) rows, the total number of remaining points, and thus the total number of coprime integers between \(1\) and \(ab\), is \(\phi(a)\phi(b)\). Thus proving that \(\phi(ab) = \phi(a)\phi(b)\).
             </p>
 
             <br>
@@ -76,7 +76,7 @@
                 which is of course impossible.
             </p>
             <p>
-                It turns out that the mapping is one-to-one only in the case that \((a, b) = 1\). This can be prooven using the Chinese remainder theorem. For every point \((x, y)\) in the \(a \times b\) lattice (that is for every point with \(0 \leq x < a\) and \(0 \leq y < b\)) the system of modulo euqivalences
+                It turns out that the mapping is one-to-one only in the case that \((a, b) = 1\). This can be prooven using the Chinese remainder theorem. For every point \((x, y)\) in the \(a \times b\) lattice (that is for every point with \(0 \leq x < a\) and \(0 \leq y < b\)) the system of modulo equivalences
                 \[
                     \begin{cases}
                         m \equiv x \mod{a} \\

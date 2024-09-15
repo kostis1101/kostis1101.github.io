@@ -29,20 +29,20 @@
         <div class="math_text">
             <br>
             <p>
-                I have been interested in infinite sums from when I first found out about them. There is something exciting and mystirious at the same time observing that if you add infinitly many number together they magically end up to a value, especially if that value is related to a well know constant such as \(\pi\). <br>
+                I have been interested in infinite sums from when I first found out about them. There is something exciting and mysterious at the same time observing that if you add infinitely many number together they magically end up to a value, especially if that value is related to a well know constant such as \(\pi\). <br>
                 As you can imaging, I have tried - with limited success - to find such infinite sums that converge to a "nice" value. About three of four years ago, when I finally had enough mathematical tool in my toolbox, I started trying out a few ideas. One of the first ideas I had has to do with what I call the semicircle function \(f(x) = \sqrt{1 - x^2}\). This function, when graphed, produces a semicircle of radius 1 around the origin above the x axis. Thus, we can easily calculate it's integral:
                 \[
                     \int_{-1}^{1} \sqrt{1 - x^2} = \frac{\pi}{2}
                 \]
                 since \(\frac{\pi}{2}\) is the area of the semicircle. <br>
-                The idea then was to find a powerseries expansion of the semicircle function and calculate the integral of the powerseries term by term. This will result in an infinite sum. This is a well know trick that is used i many such cases. For example, to proove that:
+                The idea then was to find a powerseries expansion of the semicircle function and calculate the integral of the powerseries term by term. This will result in an infinite sum. This is a well know trick that is used i many such cases. For example, to prove that:
                 \[
                     \sum_{k = 0}^{\infty} \frac{(-1)^k}{2k + 1} = \frac{\pi}{4}
                 \]
-                you calcualte the taylor series of the \(\arctan{x}\) and evaluate it at \(x = 1\). The problem was, calcualting the coefficients of the powerseries expansion of the semicircle function is no easy task!
+                you calculate the taylor series of the \(\arctan{x}\) and evaluate it at \(x = 1\). The problem was, calculating the coefficients of the powerseries expansion of the semicircle function is no easy task!
             </p>
             <br>
-            <h3>Setting everyting up</h3>
+            <h3>Setting everything up</h3>
             <p>
                 We know from the binomial theorem that:
                 \[
@@ -56,17 +56,17 @@
                 \[
                     \sqrt{1 - x} = \sum_{n = 0}^\infty \binom{1/2}{n}(-1)^n x^n
                 \]
-                And subsitution \(x^2\) for \(x\):
+                And substitution \(x^2\) for \(x\):
                 \[
                     f(x) = \sqrt{1 - x^2} = \sum_{n = 0}^\infty \binom{1/2}{n}(-1)^n x^{2n}
                 \]
                 That's the powerseries expansion of the semicircle function! We are done, right? We just need to integrate... <br>
-                Ok, the powerseries expansion is a bit aggly. The problem is that \(\binom{1/2}{n}\). That was the problem and the difficulty all along. Calculating the binomial coefficient with non integer parameters doesn't really make any sense from a combinatorics perspective. And just subsituting everything for the gamma function, which generatizes the factorial, is neither satisfying nor easy to work with. We need another way.
+                Ok, the powerseries expansion is a bit ugly. The problem is that \(\binom{1/2}{n}\). That was the problem and the difficulty all along. Calculating the binomial coefficient with non integer parameters doesn't really make any sense from a combinatorics perspective. And just substituting everything for the gamma function, which generalizes the factorial, is neither satisfying nor easy to work with. We need another way.
             </p>
             <br>
             <h3>A Breakthrough?</h3>    
             <p>
-                I was playing around with a completly unrelated but nonetheless interesting combinatorics problem conserning binary trees (I might upload something on that if anything interesting comes out of it), when I noticed something. We can find a nice, closed equation to \(\binom{1/2}{n}\), given that n is a integer. In this case that is pretty much what we want. Observe the following:
+                I was playing around with a completely unrelated but nonetheless interesting combinatorics problem concerning binary trees (I might upload something on that if anything interesting comes out of it), when I noticed something. We can find a nice, closed equation to \(\binom{1/2}{n}\), given that n is a integer. In this case that is pretty much what we want. Observe the following:
                 \[
                     \left(\frac 1 2\right)! = \left(\frac 1 2 - 1\right)!\cdot \frac{1}{2} = \cdot\cdot\cdot = \left(\frac 1 2 - n\right)!\left(\frac 1 2 - n + 1\right)\left(\frac 1 2 - n + 2\right)\cdot\cdot\cdot\frac 1 2
                 \]
@@ -95,7 +95,7 @@
             </p>
             <br>
             <h3>Applying the integral</h3>
-            So, the semicircle function becames:
+            So, the semicircle function becomes:
             \[
                 \begin{flalign*}
                     f(x) = \sqrt{1 - x^2} &= \sum_{n = 0}^\infty \frac{(-1)^{n - 1}}{2^{2n}(2n - 1)} \binom{2n}{n} (-1)^n x^{2n} \\
@@ -119,7 +119,7 @@
             \[
                 \sum_{n = 0}^\infty \frac{(2n)!}{2^{2n - 1}(n!)^2(2n - 1)(2n + 1)} = - \frac{\pi}{2}
             \]
-            whatevery you prefer. We can also multiply the equation by 2 and calculate the first term for \(n = 0\), which will give us:
+            whatever you prefer. We can also multiply the equation by 2 and calculate the first term for \(n = 0\), which will give us:
             \[
                 1 - \sum_{n = 1}^\infty \frac{(2n)!}{2^{2n}(n!)^2(2n - 1)(2n + 1)} = \frac{\pi}{4}
             \]

@@ -31,18 +31,39 @@
 				It is a well know fact that there are infinitely prime number that are \(1 \bmod 4\) and \(3 \bmod 4\). The later can be easily show by observing that if a number is \(3 \bmod 4\) then it must have a factor that is \(3 \bmod 4\) as well. Then, by way of contradiction, one can suppose that there are finitely many primes that are \(3 \bmod 4\) and based on that construct a number that is \(3 \bmod 4\) but does not have a factor that is \(3 \bmod 4\). This kind of argument does not work in the case of proving that there are infinitely many primes that are \(1 \bmod 4\). In this page, I will present to you a simple such proof that I recently came up with. 
 			</p>
 			<br>
-			<h3>Setting things up</h3>
+			<h3>The proof</h3>
 			<p>
 				The proof is going to be based on the following observation: <br>
-				The equation \(x^2 \equiv -1 \bmod p\), where \(p\) odd prime, has a solution if and only if \(p \equiv 1 \bmod 4\). To prove this we are going to use a well know result, that the multiplicative group \(\mathbb{Z}_p^\times\) of invertible elements \(\bmod p\) has a generator.
+				The equation \(x^2 \equiv -1 \pmod p\), where \(p\) odd prime, has a solution if and only if \(p \equiv 1 \bmod 4\). This is easy to see using Euler's criterion. -1 is a quadratic residue\(\bmod p\) if and only if:
+				\[
+					(-1)^{\frac{p - 1}{2}} = 1 \ \Longleftrightarrow \ 2 \ {\huge{|}} \ \frac{p - 1}{2} \ \Longleftrightarrow \ p \equiv 1 \pmod 4
+				\]
 			</p>
 			<p>
-				Let \(g\) be the generator of \(\mathbb{Z}_p^\times\). Then there exists \(k \in \mathbb N\) such that \(x = g^k\). This gives us the following equation:
-				\[
-					g^{2k} \equiv -1 \bmod p
-				\]
-				Let \(g^m \equiv -1 \bmod p\). Then \(g^{2m} \equiv 1 \bmod p\). Since \(g^m\) is periodic in terms of \(m\), we can suppose that \(1 \leq m \leq p - 1\). Then  q
+				Now suppose, toward a contradiction, that there are only finitely many primes \(p_1, p_2, ..., p_n\) that are \(1 \bmod 4\). Let \(A = (p_1\cdot\cdot\cdot p_n)^2 + 1\). Here, we distinguish two cases:
 			</p>
+			<ul>
+				<li>
+					<u>\(A\) is not a power of \(2\):</u>
+					<p>
+						If \(A\) is not a power of \(2\), then there exists an odd prime \(q\) that divides \(A\). Thus:
+						\[
+							q \ | \ ((p_1\cdot\cdot\cdot p_n)^2 + 1) \ \Longleftrightarrow\ (p_1\cdot\cdot\cdot p_n)^2 \equiv -1 \pmod q
+						\]
+						and so \(-1\) is a quadratic residue\(\bmod q\) which means \(q \equiv 1 \pmod 4\). But, of course non of the \(p_i\) divide A, thus \(q\) is not one of the \(p_i\), contradicting the choice of \(p_1, ..., p_n\) to be all the primes that are \(1 \bmod 4\)
+					</p>
+				</li>
+				<li>
+					<u>\(A\) is a power of \(2\):</u>
+					<p>
+						Suppose \(A = 2^n\). Consider the number \(A' = (A - 1)^2 + 1 = 2^{2n} - 2^{n + 1} + 2\). Since \(A - 1 = (p1\cdot\cdot\cdot p_n)^2\):
+						\[
+							A' = (p_1\cdot\cdot\cdot p_n)^4 + 1
+						\]
+						For \(n \ge 3\) it is easy to see that \(A'\) is not a power of \(2\) (hint: consider the binary representation of A'). Thus, it has a prime factor \(q\). By the save argument with the first case, \(-1\) is a quadratic residue\(\bmod q\) and thus \(q \equiv 1 \pmod 4\). But none of the \(p_i\) divide \(A'\), thus \(q\) is not in the sequence \(p_i\), contradicting the choice of \(p_i\).
+					</p>
+				</li>
+			</ul>
 		</div>
 	</div>
 </body>

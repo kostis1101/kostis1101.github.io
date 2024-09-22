@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Union of Dedekind finite sets - Kostis 1101</title>
+
+	<div id="placeholder"></div>
+</head>
+<body>
+
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	
+	<script>
+		$.get("/header.html", function(data) {
+			$("#placeholder").replaceWith(data);
+		})
+	</script>
+
+	<script>
+		$.get("/sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+
+	<script src="/javascript/tooltip.js">
+		
+	</script>
+
+	<div class="main">
+		Date: 21.09.2024
+		
+		<h1 style="text-align:center">The Union of two Dedekind Finite Sets is Dedekind Finite (without AC)</h1>
+		<br>
+		<div class="math_text">
+			<p>
+				I was reading the book "Notes on Set Theory" by Yiannis Moschovakis. At some point (Chapter 4), the notion of Dedekind finite sets introduced. It was mentioned that most properties of Dedekind finite and Dedekind infinite sets require the Axiom of Choice to be proven. One exception is the following proposition:
+				<blockquote style="text-align: center; font-style:italic">
+					The union of two Dedekind finite set is Dedekind finite.
+				</blockquote>
+				After a couple of days I managed to formulate a proof of the above statement without relying on the axiom of choice (<b>AC</b>). In this page I will present this proof.
+			</p>
+			<h2>Setting things up</h2>
+			Lets get over axioms and definitions first. I will follow the same convention that the above mentioned book follows. I will, thus, base my proof on the following 6 axioms of Zermelo:
+			<ul>
+				<li><u>Axiom of extensionality</u> <br>
+					<i>Two sets are equal if and only if they have the exact same elements, i.e.</i>
+					\[
+						A = B \ \Longleftrightarrow\ \ (\forall x)(x \in A \ \Longleftrightarrow\ \ x \in B)
+					\]
+				</li>
+				<li><u>Empty Set and Pairset Axiom</u> <br>
+					<i>There exists the empty set with no elements and for each objects \(x, y\) there exists a set which contains exactly these two, i.e.</i>
+					\[
+						(\forall x, y)(\exists A)(x \in A \ \land \ y \in A \ \land \ (\forall z \in A)(z = x \ \lor \ z = y))
+					\]
+				</li>
+				<li><u>Axiom of Separation</u> <br>
+					<i>For every set and every definite condition there exists a set with elements the elements of the set that satisfy the condition, i.e. (in second order logic):</i>
+					\[
+						(\forall S)(\forall P)(\exists A)(\forall x)(x \in A \ \Longleftrightarrow\ x \in S \ \land \ P(x))
+					\]
+				</li>
+				<li><u>Powerset Axiom</u> <br>
+					<i>For every set there exists a set which contains all the subsets of the set, i.e.</i>
+					\[
+						(\forall A)(\exists\ \mathcal{P}(A))(\forall X)(X \in \mathcal{P}(A) \ \Longleftrightarrow\ X \subseteq A)
+					\]
+					<star-node>
+						The subset relation \(\subseteq\) is defined as follows:
+						\[
+							A \subseteq B \ \Longleftrightarrow\ (\forall x)(x \in A \ \Longleftrightarrow\ x \in B)
+						\]
+					</star-node>
+				</li><br>
+				<li><u>Union Set Axiom</u> <br>
+					<i>For every family of sets there exists a set that contains exactly the elements that belong to at least one of the sets in the family, i.e.</i>
+					\[
+						(\forall F)(\exists A)(\forall x)(x \in A \ \Longleftrightarrow\ (\exists S \in F)(x \in S))
+					\]
+				</li>
+				<li><u>Axiom of Infinity</u> <br>
+					<i>There exists a set \(I\) that contains the empty set and the singleton of each of its members, i.e.</i>
+					\[
+						\emptyset \in I \ \land\ (\forall x \in I)(\{x\} \in I)
+					\]
+					We will not going to use this axiom. I just included it here for completion.
+				</li>
+			</ul>
+			<br>
+			<p>
+				Now let us define Dedekind infinite sets. 
+			</p>
+			<h4><u>Definition</u></h4>
+			<p style="font-style: italic; padding-left: 20px;">
+				A set \(A\) is called Dedekind infinite if there exists a proper subset o \(A\) that is equinumerus to \(A\), that is, there exists proper subset \(X \subset A\) and bijection \(f: X \rightarrowtail\kern-1.9ex\twoheadrightarrow A\).
+			</p>
+			<p>
+				From now on, without fear of ambiguity, we will call Dedekind finite and Dedekind infinite set as simply finite and infinite respectively.
+			</p>
+			<br>
+			<h3>A bit of notation</h3>
+			<ul>
+				<li>
+					The union of a family of sets \(F\) is represented as \(\bigcup F\).
+				</li>
+				<li>
+					The intersection of a family of sets \(F\) is represented as \(\bigcap F\).
+					<star-node>
+							The intersection of a family of sets \(F\) is the set \(S\) that contains all the elements that belong to all the sets of \(F\), i.e.
+							\[
+								x \in S \ \Longleftrightarrow\ (\forall X \in F)(x \in X)
+							\]
+					</star-node>
+				</li>
+				<li>
+					If \(f\) is a function, then \(f(a)\) will be the value of the function evaluated at \(a\), whereas \(f[A]\) will be the image of \(f\) on the set \(A\).
+				</li>
+			</ul>
+			<h2>Proof</h2>
+			<p>
+				Let  \(A, B\) be (Dedekind) finite sets. We can suppose, without loss of generality, that \(A\) and \(B\) are disjoint. Why can we do that? Because if there were not disjoint, then we could construct the set \(C = B - (A \cap B)\) which is disjoint to \(A\) and the union \(A \cup C = A \cup B\). Then, as every subset of a (Dedekind) finite set is (Dedekind) finite <star-node>This is quite easy to prove. If \(B\) finite and \(C \subseteq B\), if \(C\) where infinite, there would exist bijection \(g: C \rightarrowtail\kern-1.9ex\twoheadrightarrow D\), where \(D\) a proper subset of \(C\). Trivially extending \(g\) to \(B\) as:
+				\[
+				g'(x) = \begin{cases} 
+						g(x) & x \in C \\
+						x & \text{otherwise}
+					\end{cases}
+				\]
+				gives us a bijection from \(B\) to a proper subset of it, thus contradicting that \(B\) is finite.
+				</star-node>, \(C\) would be finite as subset of the finite set \(B\). And so we could just prove that the union \(A \cap C\) if finite and that would automatically imply that the union \(A \cap B\) is also finite. So from now on we will suppose that \(A \cap B = \emptyset\).
+			</p>
+			<p>
+				To prove the Theorem we will suppose, toward a contradiction, that there union is infinite. That is that there exists a proper subset \(S \subset A \cup B\) and a bijection \(f: A \cup B \rightarrowtail\kern-1.9ex\twoheadrightarrow S\). <br>
+				Since \(S\) is a proper subset of \(A \cup B\), there exists an element \(x_0 \notin S\). Without loss of generality, suppose \(x_0 \in B\).
+			</p>
+			<h4><u>Definition 1</u></h4>
+			<p class="statement-block">
+				For every \(x \in A \cup B\) let \(E(x)\) denote the set that contains \(x\) and is closed under \(f\), i.e. \(E(x) = \{X \subseteq A \cup B \ | \ x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(G(x)\) denote the set \(G(x) = \bigcap E(x)\)
+			</p>
+			Let's take a look at a couple of properties of the above defined sets:
+			<h4><u>Property 1</u></h4>
+			<p class="statement-block">
+				For every \(x \in A \cup B\) the system \((G(x), x, f)\) satisfies induction, that is, for every subset \(X \subseteq G(x)\):
+				\[
+					x \in X \ \land\ (\forall y \in G(x))(y \in X \Longrightarrow f(y) \in X) \ \Longrightarrow\ X = G(x)
+				\]
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				Let \(X \subseteq G(x)\) such that:
+				\[
+					x \in X \ \land\ (\forall y \in G(x))(y \in X \Longrightarrow f(y) \in X)
+				\]
+				Observe, though, that the implication \(y \in X \Longrightarrow f(y) \in X\) doesn't hold only for \(y \in G(x)\). Indeed, if \(y \notin G(x)\) then \(y \notin X\) and so trivially \(y \in X \Longrightarrow f(y) \in X\). This means, that:
+				\[
+					x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)
+				\]
+				and so \(X \in E(x)\). But \(G(x) \bigcap E(x) \ \Longrightarrow\ G(x) \subseteq X\). This, together with \(X \subseteq G(x)\), implies \(X = G(x)\).
+			</p>
+			<div class="qed-square"></div>
+			<br>
+			<h4><u>Property 2</u></h4>
+			<p class="statement-block">
+				For every \(x \in A \cup B, \ G(x) \in E(x)\)
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				All we need to prove is that \(x \in G(x)\) and that \(y \in G(x) \Longrightarrow f(y) \in G(x)\). The first is quite easy to see, since all the set in \(E(x)\) contain \(x\) and so does their intersection. For the second part, suppose \(y \in G(x)\). That means that \(\forall X \in E(x), \ y \in X\). But that means that \(f(y) \in X, \ \forall X \in E(x)\) and so \(f(y) \in G(x)\).
+			</p><div class="qed-square"></div>
+			<br>
+			<p>
+				Let \(\mathcal{E} = G(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = \bigcap \mathcal{E}\).
+				Now we will define a total ordering on \(Q\) as follows:
+			</p>
+			<div class="qed-square"></div>
+			<br>
+			<h4><u>Lemma 1</u></h4>
+			<p class="statement-block">
+				For every \(a, b \in Q\):
+				\[
+					b \in G(a) \ \Longleftrightarrow\ G(b) \subseteq G(a)
+				\]
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				Suppose \(G(b) \leq G(a)\). Then obviously \(b \in G(b) \ \Longrightarrow\ b \in G(a)\). <br>
+				For the converse, suppose that \(b \in G(a)\). Let \(R = G(a) \cap G(b)\). It is enough to prove that \(R = G(b)\). <br>
+				We have that \(b \in R\) and \(R \subseteq G(b)\). Also, for every \(x \in G(b)\):
+				\[
+					\begin{flalign*}
+						x \in R \ &\Longrightarrow\ x \in G(a) \ \land\ x \in G(b) \\
+								  &\Longrightarrow\ f(x) \in G(a) \ \land\ f(x) \in G(b) \\
+								  &\Longrightarrow\ f(x) \in R
+					\end{flalign*}
+				\]
+				So the implication \(x \in R \Longrightarrow\ f(x) \in R\) is true for all \(x \in G(b)\). <br>
+				By <b>Lemma 1</b> the system \((G(b), b, f)\) satisfies the induction principal. But the hypothesis of the induction principal for the subset \(R\) is satisfied. And so \(R = G(b)\)<br>
+			</p>
+			<div class="qed-square"></div>
+			<br>
+			<h4><u>Lemma 2</u></h4>
+			<p class="statement-block"">
+				For all \(x \in Q\):
+				<ol style="font-style: italic;">
+					<li>
+						\(x \neq f(x)\)
+					</li><br>
+					<li>
+						\((\forall y \in G(x), y \neq x)(\exists z \in G(x))(y = f(z))\)
+					</li><br>
+					<li>
+						For all \(x \in Q\), \(G(f(x)) = G(x) - \{x\}\).
+					</li>
+				</ol>
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				<ol>
+					<li>
+						Let \(M = \{x \in Q \ | \ x \neq f(x)\}\). We will prove that \(M = Q\). \((Q, x_0, f)\) satisfy induction, and so, by induction: <br>
+						<ul>
+							<li>
+								\(x_0 \in Q\) but \(x_0 \notin f[A \cup B]\), so it must \(x_0 \neq f(x_0)\). Thus \(x_0 \in M\)
+							</li>
+							<li>
+								Suppose \(x \in M\). Then \(x \neq f(x)\) and, since \(f\) a bijection, it must \(f(x) \neq f(f(x))\). Thus \(f(x) \in M\).
+							</li>
+						</ul>
+						By induction \(M = Q\) and so \(x \neq f(x), \ \forall x \in Q\).<br>
+					</li><br>
+					<li>
+						Suppose, by way of contradiction, that there exists some \(y \in G(x) - \{x\}\) such that there is no \(z \in G(x)\) with \(f(z) = y\). But then it is evident than \(G(x) - \{y\}\) is closed under \(f\) and since \(y \neq x \ \Longrightarrow\ x \in G(x) - \{y\}\) this means that \(G(x) - \{y\} \in E(x) \ \Longrightarrow\ G(x) \subseteq G(x) - \{y\}\), which is a contradiction. <star-node>This can also be proven by induction</star-node>
+					</li><br>
+					<li>
+						<p>
+							Firstly we will prove that \(x \notin G(f(x))\) for all \(x \in Q\) by induction. The base case for \(x = x_0\) is quite simple, since \(G(f(x)) \subseteq f[A \cup B]\) and \(x \notin f[A \cup B]\). For the induction step suppose that \(x \notin G(f(x))\) for some \(x \in Q\). Then, by way of contradiction, if \(f(x) \in G(f(f(x)))\) from statement of the current Lemma, there exists some \(z \in G(f(f(x)))\) such that \(f(x) = f(z)\) which means that \(x = z\). By <b>Lemma 1</b> \(G(f(f(x))) \subseteq G(f(x))\) and so \(z \in G(f(x)) \ \Longrightarrow\ x \in G(f(x))\) which contradicts the induction hypothesis.
+						</p>
+						<p>
+							Now, it is quite evident that \(f(x) \in G(x)\) and \(x \neq f(x)\) for all \(x \in Q\). By <b>Lemma 1</b> \(G(f(x)) \subseteq G(x)\) and \(x \notin G(f(x))\). So \(G(f(x)) \subseteq G(x) - \{x\}\).
+						</p>
+						<p>
+							Now, by induction again, we are going to prove that \(f[G(x)] \subseteq G(f(x))\). Indeed:
+							<ul>
+								<li>
+									\(f(x) \in G(f(x))\)
+								</li>
+								<li>
+									if \(f(y) \in G(f(x))\) then \(f(f(y)) \in G(f(x))\) for all \(y \in G(x)\)
+								</li>
+							</ul>
+							And so, by induction, \(f(y) \in G(f(x)) \ \forall y \in G(x)\) and so for the image \(f[G(x)]\):
+							\[
+								f[G(x)] \subseteq G(f(x))
+							\]
+						</p>
+						<p>
+							Now we are going to prove that \(f[G(x)] \cup \{x\} = G(x)\). Start by observing that \(f[G(x)] \cup \{x\} \subseteq G(x)\), since by <b>Lemma 1</b> \(f(x) \in G(x) \ \Longrightarrow\ G(f(x)) \subseteq G(x)\) and \(f[G(x)] \subseteq G(f(x))\).<br>
+							Now observe that \(f[G(x)] \cup \{x\}\) contains \(x\) and is closed under \(f\), since for all \(y \in f[G(x)] \cup \{x\}\), distinguishing two cases, we have:
+							<ol>
+								<li>
+									If \(y = x \ \Longrightarrow\ f(y) \in f[G(x)] \cup \{x\}\)
+								</li>
+								<li>
+									If \(y \in f[G(x)]\):
+									\[
+										\begin{flalign*}
+											y \in f[G(x)] \ &\Longrightarrow\ \exists z \in G(x) \ \ y = f(z) \\
+															&\Longrightarrow\ f(z) \in G(x) \\
+															&\Longrightarrow\ f(f(z)) \in f[G(x)] \\
+															&\Longrightarrow\ f(y) \in f[G(x)] \cup \{x\}
+										\end{flalign*}
+									\]
+								</li>
+							</ol>
+							In any case \(f(y) \in f[G(x)] \cup \{x\}\). Thus \(f[G(x)] \cup \{x\} \in E(x)\) which means that \(G(x) \subseteq f[G(x)] \{x\}\).<br>
+							The two subset relations imply that the two sets are equal, i.e. \(G(x) = f[G(x)] \cup \{x\}\).
+						</p>
+						<p>
+							So far, we have the following relation: \(f[G(x)] \subseteq G(f(x)) \subseteq G(x) - \{x\}\). From this it is evident that \(x \notin f[G(x)]\) and since \(G(x) = f[G(x)] \cup \{x\}\) it must \(f[G(x)] = G(x) - \{x\}\). From this equality and the the previous subset relation we get \(G(f(x)) = G(x) - \{x\}\)
+						</p>
+					</li>
+				</ol>
+			</p>
+			<div class="qed-square"></div>
+			<br>
+			<h4><u>Definition 2</u></h4>
+			<p class="statement-block">
+				Define the relation \(\leq \ \subset\ Q \times Q\) such that for every \(a, b \in Q\):
+				\[
+					a \leq b \ \Longleftrightarrow\ b \in G(a)
+				\]
+			</p>
+			<br>
+			<h4><u>Lemma 3</u></h4>
+			<p class="statement-block">
+				For every \(x \in Q\) and for each \(y \in G(x) - \{x\}\), \(G(y) \subseteq G(x) - \{x\}\).
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				We are going to prove that all elements of \(G(y)\) are also members of \(G(x) - \{x\}\). By induction in the set \(G(y)\). Trivially \(y \in G(x) - \{x\}\). Now let \(z \in G(y)\) such that \(z \in G(x) - \{x\}\). Then, by <b>Lemma 2</b>, \(z \in G(f(x)) \ \Longrightarrow\ f(z) \in G(f(x)) \ \Longrightarrow\ f(z) \in G(x) - \{x\}\).
+			</p><div class="qed-square"></div>
+			<h4><u>Lemma 4</u></h4>
+			<p class="statement-block">
+				The above ordering  is a linear (total) ordering
+			</p>
+			<u>proof</u>
+			<div class="proof-block">
+				<p>
+					By <b>Lemma 1</b> \(a \leq b \ \Longleftrightarrow\ G(b) \subseteq G(a)\). The reflective and transitive properties of \(\leq\) follow trivially from the reflective and transitive properties of the subset relation. The antisymmetric property is not as straight forward. Suppose \(a, b \in Q\) such that \(a \leq b \ \land\ b \leq a\). It follows that \(G(a) = G(b)\). Suppose, towards a contradiction, that \(a \neq b\). Then, since \(a \in G(b)\), by <b>Lemma 3</b> \(G(a) \subseteq G(b) - \{b\}\) which is contradicting \(G(a) = G(b)\).
+				</p>
+				<p>
+					Let's prove now that the ordering is linear. <br>
+					Let the set:
+					\[
+						T = \{ a \in Q \ | \ (\forall b \in Q)(a \leq b \ \lor\ b \leq a) \}
+					\]
+					It is enough to prove that \(T = Q\). By induction.<br>
+					The base case is easy: for all \(y \in Q = G(x_0), \ y \leq x_0\). So \(x_0 \in T\). Now for the induction step, suppose that \(x \in T\) for some \(x \in Q\). That means that for all \(y \in Q, \ y \leq x \ \lor\ x \leq y\). We distinguish two cases:
+					<ol>
+						<li>
+							If \(x < y\) then:
+							\[
+								\begin{flalign*}
+										y \in G(x) \ \land\ y \neq x \ &\Longrightarrow\ y \in G(x) - \{x\} \\
+																	   &\Longrightarrow\ y \in G(f(x)) \\
+																	   &\Longrightarrow\ f(x) \leq y
+								\end{flalign*}
+							\]
+						</li>
+						<li>
+							If \(y \leq x\) then:
+							\[
+								x \in G(y) \ \Longrightarrow\ f(x) \in G(y) \ \Longrightarrow\ y \leq f(x)
+							\]
+						</li>
+					</ol>
+					In any case \(f(x) \leq y \ \lor\ f(x) \geq y\). Thus \(f(x) \in T\).
+				</p><div class="qed-square"></div>
+				<br>
+				<h4><u>Lemma 5</u></h4>
+				<p class="statement-block">
+					The ordered set \(Q, \leq\) is a well ordered set.
+				</p>
+				<u>proof</u>
+				<p class="proof-block">
+					We have to prove that all non-empty subsets of \(Q\) have a least element. By way of contradiction, suppose there exists a subset \(\emptyset \neq X \subseteq Q\) such that:
+					\[
+						(\forall x \in X)(\exists y \in X)(y < x)
+					\]
+					We will prove by induction that \(X\) must be the empty set.<br>
+					Let \(Y = \{ x \in Q \ | \ (\forall x \leq y)(y \notin X) \}\). Obviously \(Y \subseteq Q\) and \(Y \cap X = \emptyset\).<br>
+					We have:
+					<ul>
+						<li>
+							\(x_0\) is the least element of Q and so \(x_0 \notin X\) (otherwise it would be the least element of \(X\)) and trivially \((\forall y \leq x)(y \notin X)\). So \(x_0 \in Y\).
+						</li><br>
+						<li>
+							If \(x \in Y\) for some \(x \in Q\), then \(\forall y \leq x, \ x \notin X\). And since \(x < f(x)\), this is equivalent to:
+							\[
+								\forall y < f(x), \ y \notin X
+							\]
+							But necessarily \(f(x) \notin X\), because if \(f(x) \in X\) then \(f(x)\) would be the least element of \(X\).<br>
+							Since \(f(x) \notin X\), together with \(\forall y < f(x), \ y \notin X\), we have:
+							\[
+								\forall y \leq f(x), \ y \notin X
+							\]
+							Thus \(f(x) \in Y).
+						</li>
+					</ul><div class="qed-square"></div>
+					By induction, \(Y = Q\) and necessarily, since \(X\) and \(Y\) disjoint, \(X = \emptyset\).
+				</p>
+				<br>
+				<p>
+					Okay, everything that we need, we have it ready. Let's finish the proof.<br>
+					Define the following sets:
+					\[
+						Q_A = Q \cap A \\
+					\]
+					\[
+						Q_B = Q \cap B \\
+					\]
+					Since \(A \cap B = \emptyset\) and \(Q \subseteq A \cup B\), \(Q_A \cap Q_B = \emptyset\) and \(Q = Q_A \cup Q_B\).
+				</p>
+				<p>
+					We can easily prove that at least one of \(Q_A, Q_B\) doesn't have an upper bound. By way of contradiction, suppose that \(\alpha, \beta\) are upper bounds of \(Q_A, Q_B\) respectively, i.e.:
+					\[
+						\forall a \in A, \ a \leq \alpha
+					\]
+					\[
+						\forall b \in B, \ b \leq \beta
+					\]
+					Then obviously \(\max_Q(\alpha, \beta)\) is an upper bound of both \(Q_A\) and \(Q_B\). But then \(f(max(\alpha, \beta)) \in Q\) \(\Longrightarrow\ f(\max(\alpha, \beta)) \in Q_A \cup Q_B \ \Longrightarrow\ f(\max(\alpha, \beta)) \in Q_A\) or \(f(\max(\alpha, \beta)) \in Q_B\). But \(f(\alpha) > \alpha\) and \(f(\beta) > \beta\) and thus \(f(\max(\alpha, \beta)) > \max(\alpha, \beta)\). This means that either \(Q_A\) or \(Q_B\) (in whichever set \(f(\max(\alpha, \beta))\) may belong) has an element greater than its upper bound, which is a clear contradiction.
+				</p>
+				<p>
+					That means that at least one of \(Q_A\) or \(Q_B\) does not have an upper bound. Without loss of generality, suppose that \(Q_A\) does not have an upper bound. The argument is very similar for the remaining case.
+				</p>
+				<p>
+					Since \(Q_A\) does not have an upper bound, for every \(a \in Q_A\) there exists \(a' \in Q_A\) such that \(a < a'\).<br>
+					Now define the function \(n: Q_A \rightarrow \mathcal{P}(Q_A)\) to be the function with \(n(a) = \{ x \in Q_A \ | \ a < x \}\) <star-node>The more rigorous definition of \(n\) would be:
+						\[
+							\begin{flalign*}
+							n = \{(a, n(a)) &\in Q_A \times \mathcal{P}(Q_A) \ | \\
+								&(\forall x \in Q_A)(x \in n(a) \Longleftrightarrow a < x)\}
+							\end{flalign*}
+						\]
+					</star-node>
+				</p>
+				<p>
+					Since \(Q_A\) does not have an upper bound, \(n(a)\) is non-empty for all \(a \in Q_A\). And \(Q\) is a well ordered set, so, \(n(a)\) has a least element. Based on this we are going to define the mapping \(h: Q_A \rightarrow Q_A\) such that:
+					\[
+						h(a) = \inf n(a)
+					\]
+					We will prove that \(h\) is an injection and that \(h[Q_A] \subsetneq Q_A\). Let's start with the later first. Observe that \(\forall a \in Q_A, \ h(a) \in n(a)\). But obviously \(\inf Q_A \notin n(a)\). Thus \(h(a) \neq \inf Q_A\) and so \(h[Q_A] \subsetneq Q_A\).
+				</p>
+				<p>
+					For the injection part, suppose that \(h(a) = h(a')\) where \(a, a' \in Q_A\). Then \(\inf n(a) = \inf n(a')\).<br>
+					Toward a contradiction, suppose that \(a \neq a'\). Since the ordering of \(Q\) that we defined is total (and so is it's restriction on \(Q_A\)) we can suppose, without loss of generality, that \(a < a'\). Then \(a' \in n(a) \ \Longrightarrow\ \inf n(a) \leq a'\). Also, \(a' < \inf n(a')\). <br>
+					From the last two inequalities, \(\inf n(a) < \inf n(a')\) which contradicts \(\inf n(a) = \inf n(a')\).
+				</p>
+				<p>
+					Since \(h\) is an injection from \(Q_A\) into a proper subset \(h[Q_A] \subsetneq Q_A\), \(Q_A\) is Dedekind infinite. It follows trivially that also \(A\) is Dedekind infinite as \(Q_A \subseteq A\).<br>
+					This is clearly contradicting the beginning assumption that \(A\), \(B\) and \(A \cup B\) are Dedekind finite.
+				</p><div class="qed-square" style="background-color: black;"></div>
+			</div>
+		</div>
+	</div>
+</body>

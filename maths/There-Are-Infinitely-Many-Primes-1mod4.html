@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	
-	<head>
+
+<head>
 	<meta charset="UTF-8">
 	<title>Eulers Totient Function - Kostis 1101</title>
-	<link rel="stylesheet" href="/style.css">
-	<link rel="stylesheet" href="/PrismJS/prismjs.css">
-	
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+	<div id="placeholder"></div>
 </head>
 <body>
-	<div id="sidenav-placeholder"></div>
 	
+	<div id="sidenav-placeholder"></div>
+
 	<script src="//code.jquery.com/jquery.min.js"></script>
+	
+	<script>
+		$.get("../header.html", function(data) {
+			$("#placeholder").replaceWith(data);
+		})
+	</script>
+
+
 	<script>
 		$.get("../sidebar.html", function(data){
 			$("#sidenav-placeholder").replaceWith(data);

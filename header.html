@@ -1,0 +1,23 @@
+
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/PrismJS/prismjs.css">
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script>
+    class StarNode extends HTMLElement {
+        connectedCallback() {
+            setTimeout(() => {
+                this.innerHTML = `<div class="tooltip">
+                    [<div style="display: inline; font-size:15pt; position: relative; top:4pt;">*</div>]
+                    <span class="tooltip-text">
+                        ` + this.innerHTML + `
+                    </span>
+                </div>`
+            });
+        }
+    }
+    customElements.define("star-node", StarNode);
+</script>

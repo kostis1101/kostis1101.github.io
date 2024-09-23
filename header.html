@@ -7,17 +7,29 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <script>
-    class StarNode extends HTMLElement {
-        connectedCallback() {
-            setTimeout(() => {
-                this.innerHTML = `<div class="tooltip">
-                    [<div style="display: inline; font-size:15pt; position: relative; top:4pt;">*</div>]
-                    <span class="tooltip-text">
-                        ` + this.innerHTML + `
-                    </span>
-                </div>`
-            });
-        }
-    }
-    customElements.define("star-node", StarNode);
+
+	var star_nodes = 0;
+
+	class StarNode extends HTMLElement {
+		connectedCallback() {
+			/*setTimeout(() => {
+				this.innerHTML = `<div class="tooltip">
+					[<div style="display: inline; font-size:15pt; position: relative; top:4pt;">*</div>]
+					<span class="tooltip-text">
+						` + this.innerHTML + `
+					</span>
+				</div>`
+			});*/
+			setTimeout(() => {
+				star_nodes += 1;
+				this.innerHTML = `<div class="tooltip" id="star-node-` + star_nodes + `">
+					[` + star_nodes + `]
+					<span class="tooltip-text">
+						` + this.innerHTML + `
+					</span>
+				</div>`
+			});
+		}
+	}
+	customElements.define("star-node", StarNode);
 </script>

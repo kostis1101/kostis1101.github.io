@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<Title>Astrophotography - Kostis 1101</Title>
+	<link rel="stylesheet" href="/style.css">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+		$.get("/sidebar.html", function(data) {
+			$("#sidenav-placeholder").replaceWith(data);
+		})
+	</script>
+
+	<div class="main">
+		<div style="margin: 50px 10% 50px 10%; font-size: 18pt">
+			<h1 style="text-align: center;">Astrophotography</h1>
+			<br>
+			<p>
+				In my spare time and whenever I get to be at a location with low light pollution, I like to take picture of the night scy. Due to the restrictions of my gear, I manly take photos of the Milky Way.
+			</p>
+			<br>
+
+			<h3>Milky Way Shot from Anogia Crete (2023)</h3>
+			<p>
+				This is a shot from 2023 from a location near the Anogia Crete. The location was also close to the Skinakas Observatory. The night sky was, as always, beautiful and the sky was fortunately completely clear. But we could see the light from Herakleion...
+			</p>
+			<img src="anogia-2023.png" width="75%" style="margin-left: auto; margin-right: auto; display: block">
+			<p>
+				The above image is the result of 100 stacked frames, each of 60 sec exposure time, stacked in Deep Sky Stacker and processed in Photoshop afterwards.<br>
+				Gear:
+				<ul>
+					<li>
+						Camera: Canon EOS 450D
+					</li>
+					<li>
+						Lens: Canon EF-S 18mm
+					</li>
+					<li>
+						Mount: Star Adventurer Mini
+					</li>
+				</ul>
+			</p>
+		</div>
+	</div>
+</body>

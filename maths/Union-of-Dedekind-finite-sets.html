@@ -146,6 +146,9 @@
 				\[
 					x \in X \ \land\ (\forall y \in G(x))(y \in X \Longrightarrow f(y) \in X) \ \Longrightarrow\ X = G(x)
 				\]
+				<star-node>
+					One can prove that the system \((G(x), x, f)\) satisfies the Peano axioms and thus is a model of natural numbers. The only thing that we are going to need here, tho, is induction.
+				</star-node>
 			</p>
 			<u>proof</u>
 			<p class="proof-block">
@@ -398,7 +401,7 @@
 				</p>
 				<p>
 					Since \(Q_A\) does not have an upper bound, for every \(a \in Q_A\) there exists \(a' \in Q_A\) such that \(a < a'\).<br>
-					Now define the function \(n: Q_A \rightarrow \mathcal{P}(Q_A)\) to be the function with \(n(a) = \{ x \in Q_A \ | \ a < x \}\) <star-node>The more rigorous definition of \(n\) would be:
+					Now define the function \(n: Q_A \rightarrow \mathcal{P}(Q_A)\) to be the function with \(n(a) = \{ x \in Q_A \ | \ a < x \}\). <star-node>The more rigorous definition of \(n\) would be:
 						\[
 							\begin{flalign*}
 							n = \{(a, n(a)) &\in Q_A \times \mathcal{P}(Q_A) \ | \\
@@ -420,7 +423,11 @@
 					From the last two inequalities, \(\inf n(a) < \inf n(a')\) which contradicts \(\inf n(a) = \inf n(a')\).
 				</p>
 				<p>
-					Since \(h\) is an injection from \(Q_A\) into a proper subset \(h[Q_A] \subsetneq Q_A\), \(Q_A\) is Dedekind infinite. It follows trivially that also \(A\) is Dedekind infinite as \(Q_A \subseteq A\).<br>
+					Since \(h\) is an injection from \(Q_A\) into a proper subset \(h[Q_A] \subsetneq Q_A\), \(Q_A\) is Dedekind infinite. It follows trivially that also \(A\) is Dedekind infinite as \(Q_A \subseteq A\).
+					<star-node>
+						As discussed at the beginning of the proof
+					</star-node>
+					<br>
 					This is clearly contradicting the beginning assumption that \(A\), \(B\) and \(A \cup B\) are Dedekind finite.
 				</p><div class="qed-square" style="background-color: black;"></div>
 			</div>

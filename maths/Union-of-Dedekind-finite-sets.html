@@ -175,9 +175,7 @@
 			<br>
 			<p>
 				Let \(\mathcal{E} = G(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = \bigcap \mathcal{E}\).
-				Now we will define a total ordering on \(Q\) as follows:
 			</p>
-			<div class="qed-square"></div>
 			<br>
 			<h4><u>Lemma 1</u></h4>
 			<p class="statement-block">
@@ -188,7 +186,7 @@
 			</p>
 			<u>proof</u>
 			<p class="proof-block">
-				Suppose \(G(b) \leq G(a)\). Then obviously \(b \in G(b) \ \Longrightarrow\ b \in G(a)\). <br>
+				Suppose \(G(b) \subseteq G(a)\). Then obviously \(b \in G(b) \ \Longrightarrow\ b \in G(a)\). <br>
 				For the converse, suppose that \(b \in G(a)\). Let \(R = G(a) \cap G(b)\). It is enough to prove that \(R = G(b)\). <br>
 				We have that \(b \in R\) and \(R \subseteq G(b)\). Also, for every \(x \in G(b)\):
 				\[
@@ -222,7 +220,7 @@
 			<p class="proof-block">
 				<ol>
 					<li>
-						Let \(M = \{x \in Q \ | \ x \neq f(x)\}\). We will prove that \(M = Q\). \((Q, x_0, f)\) satisfy induction, and so, by induction: <br>
+						Let \(M = \{x \in Q \ | \ x \neq f(x)\}\). We will prove that \(M = Q\). \((Q, x_0, f)\) satisfies induction, and so, by induction: <br>
 						<ul>
 							<li>
 								\(x_0 \in Q\) but \(x_0 \notin f[A \cup B]\), so it must \(x_0 \neq f(x_0)\). Thus \(x_0 \in M\)
@@ -288,6 +286,7 @@
 			</p>
 			<div class="qed-square"></div>
 			<br>
+			Now we will define a total ordering on \(Q\) as follows:
 			<h4><u>Definition 2</u></h4>
 			<p class="statement-block">
 				Define the relation \(\leq \ \subset\ Q \times Q\) such that for every \(a, b \in Q\):
@@ -344,7 +343,7 @@
 				<br>
 				<h4><u>Lemma 5</u></h4>
 				<p class="statement-block">
-					The ordered set \(Q, \leq\) is a well ordered set.
+					The ordered set \((Q, \leq)\) is a well ordered set.
 				</p>
 				<u>proof</u>
 				<p class="proof-block">

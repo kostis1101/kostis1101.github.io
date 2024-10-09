@@ -22,12 +22,9 @@
 			});*/
 			setTimeout(() => {
 				star_nodes += 1;
-				this.innerHTML = `<div class="tooltip" id="star-node-` + star_nodes + `">
-					[` + star_nodes + `]
-					<span class="tooltip-text">
+				this.innerHTML = `<div class="tooltip" id="star-node-` + star_nodes + `">[` + star_nodes + `]<span class="tooltip-text">
 						` + this.innerHTML + `
-					</span>
-				</div>`
+					</span></div>`
 			});
 		}
 	}

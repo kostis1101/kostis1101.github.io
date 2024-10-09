@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+	<meta charset="UTF-8">
+	<title>Convex Hull Algorithm - Kostis 1101</title>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="/PrismJS/prismjs.css">
+	
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+	<div id="header-placeholder"></div>
+</head>
+
+<body>
+	<div id="sidenav-placeholder"></div>
+	
+	<script src="//code.jquery.com/jquery.min.js"></script>
+
+	<script>
+		$.get("/header.html", function(data) {
+			$("#header-placeholder").replaceWith(data);
+		})
+	</script>
+
+	<script>
+		$.get("/sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+
+	<script src="/javascript/tooltip.js"></script>
+	
+	
+	<div class="main">
+		Date: 09/10/2024
+		<h2 style="text-align: center;">An \(O(n \log n)\) Algorithm to Compute the Convex Hull</h2>
+		
+		<div class="math_text">
+			<br>
+			<p>
+				In this page, I will present an algorithm for calculating the convex hull of a set of points.
+			</p><br>
+			
+			<h4>Definition</h4>
+			<p class="statement-block">
+				A convex hull of a (finite) subset of \(\mathit{S \subseteq R}^2\) is a polygon with vertices points of \(S\) such that it contains (both in its interior and on its boundary) all points of \(S\).
+			</p>
+
+			<h2>The Core Idea</h2>
+			<p>
+				The core idea of the algorithm is to iteratively add new points and slowly build the convex hull. We will have a "temporary" convex hull, which at the beginning is only going to consist of two points, and while traversing the points we will update the "temporary" convex hull is necessary. At the end, this "temporary" convex hull will be the solution the final solution.
+			</p>
+			<p>
+				We suppose that the points are represented by there cartesian coordinates. We then observe that the points with highest and lowest y-coordinate are necessarily vertices of the convex hull (why?). So the first step of the algorithm is to find these two points. With just these two points, the temporary convex hull is a digon <star-node>A digon is a polygon with two sides and two vertices.</star-node>. Then, we go through each of the remaining points and check whether they are outside of the temporary convex hull and if so we update the convex hull to include them. The updating consists of two parts: First we insert the new point into the polygon. But inserting a point in the polygon might make the polygon concave. Thus, in the second part, we delete any such points of the temporary polygon whose interior angle is bigger than \(180^\circ\). We repeat the previous procedure for every point in the set of given points and we end up with the convex hull.
+			</p>
+			<h2>Some Notation</h2>
+			<p>
+				If \(P \in \mathbb{R}^2\) then we will denote \(P_x, \ P_y\) the x- and y-coordinates of \(P\) respectively. If \(P\) s indexed with index \(i\) then the coordinates are written after the index, .i.e \({P_{i}}_x\). <br>
+				Angles are written counterclockwise, e.g. the angle \(\measuredangle CBA\) is the following:
+				<img src="angle.png" width="50%">
+			</p>
+
+			<h2>The Algorithm</h2>
+			<p>
+				Let \(S\) be a collection of points of \(\mathbb{R}^2\) whose convex hull is to be found. The first step of the algorithm consists of finding the "top" and "bottom" points of \(A\), i.e. the points with the hight / lowest y-coordinate respectively. This is simply achieved by traversing \(A\) once. We will denote the "top" / "bottom" points as \(R\) and \(Q\) respectively.
+			</p>
+			<p>
+				We store the convex hull in two <b>sorted</b> <star-node>This is important since we will run binary search on them.</star-node> collections, one for each side of the convex hull. Imagine drawing a line through \(RQ\) as shown bellow; all the vertices that lie on either side of the line will be in the respective collection. We will discuss the data structure of these collections later. For now assume that they are a vector. The points in both collections are going to be sorted by there y-coordinate.
+			</p>
+			<figure>
+				<img src="sides.png" width="auto" style="margin-left: auto; margin-right: auto; display: block">
+				<figcaption style="text-align: center; font-style: italic;">The red vertices are part of the left collection and the green part of the white collection.<br>The white points are the points \(R\) and \(Q\)</figcaption>
+			</figure>
+			<p>
+				Let's call the left collection \(C_L\) and the right collection \(C_R\). We will also denote the respective polygonal lines that are formed by the points of \(C_L\) and \(C_R\) by the same name (i.e. the polygonal line formed by \(C_L\) is also going to be denoted as \(C_L\)). We also assume at the beginning the temporary convex hull consists only of the points \(R\) and \(Q\) and that both of those points are part of both \(C_L\) and \(C_R\).
+			</p>
+			<p>
+				We continue to the main loop of the algorithm. This main loop consists of three parts, we traverse \(A\) and for each point \(P \in A\) and:
+				<ol>
+					<li>We check if the point is outside of the temporary convex hull;</li>
+					<li>if so, we inserted in the appropriate collection (either \(C_L\) or \(C_R\));</li>
+					<li>we erase any points of the two collections that should not be part of the convex hull anymore.</li>
+				</ol>
+				Let's go over each step separately.
+			</p>
+			<h3>Checking if a new point is outside of the temporary convex hull</h3>
+			<p>
+				In the following figure the coloured points (white, red, green) are the points of the temporary convex hull. The black point \(P\) represents the "new" point, i.e. the point that we are currently traversing.
+			</p>
+			<figure>
+				<img src="new_point.png" width="50%">
+			</figure>
+			<p>
+				We will perform the check on both sides of the polygon (i.e. \(C_L\) and \(C_R\)) separately. Let's concern ourself with the right side. The left side will work in a similar way. What we essentially want to do is to check whether the new point is on the "right" side of \(C_R\). To do this, we will draw a line \(\varepsilon\) parallel to the x-axis that goes through \(P\). Then we compute it's intersection with the polygonal line that is formed by the points in \(C_R\) and check whether the intersection has an x-coordinate that is larger or smaller than \(P\). Keep in mind that since \(C_R\) and \(C_L\) is convex form a convex polygon, the intersection of the parallel line with the polygonal line of \(C_R\) is unique.
+			</p>
+			<p>
+				But how do we compute the intersection of \(\varepsilon\) with \(C_R\)? One naive way is to compute the intersection of all line segments of \(C_R\). This works... but there is na significantly more efficient way. See, we don't need to check for line intersection between \(\varepsilon\) and every line segment of \(C_R\). Rather, we ca just compute the intersection of \(\varepsilon\) with the line segment that is formed by points that are on either side of \(\varepsilon\) (shown in cyan <star-node>Weird colour name, innit?</star-node>). That is, we just need to find the pair of consecutive points of \(C_R\) whose y-coordinates are not both bigger or both smaller than \(P_y\). But remember, \(C_R\) and \(C_L\) are sorted! So we can easily and very efficiently find the line segment we need by performing a binary search through \(C_R\) (resp. \(C_L\)).
+			</p>
+			<p>
+				Once we find the line segment we can compute the intersection point with \(\varepsilon\) and compare its x-coordinate with \(P_x\) to determine if \(P\) lies outside the "temporary" convex hull.
+			</p>
+			<p>
+				A small note for optimization: For a given point \(R\) we don't need to perform the above procedure for both \(C_R\) and \(C_L\). Of course, only one is enough, since \(R\) can not be both rightwards of \(C_R\) and leftwards of \(C_L\). To decide the side we are going to check, we can compute the side of the line \(RQ\) that \(P\) lies (with the same algorithm that we also check if \(P\) is outside \(C_R\) and \(C_L\)) and if \(P\) is on the left side of \(RQ\) then we check \(P\) against \(C_L\), otherwise we check against \(C_R\).
+			</p>
+			<h3>Inserting \(P\) and update the temporary convex hull</h3>
+			<p>
+				If we find that \(P\) is indeed outside we temporary convex hull we need to insert it and then update the polygon the remain convex. The insert part is straight forward. Since \(C_R\) and \(C_L\) are ordered by the y-coordinate, we just need to find the appropriate location of \(P\). This is achieved by a binary search, which we have already done in the previous step. The only thing that remains is the tricker <star-node>Not that tricky, don't worry :)</star-node> deletion of any spare points of the temporary convex hull whose new interior angles are grater that \(180^\circ\). To understand it a bit better, let's consider the following example:
+			</p>
+			<img src="new-point-before-insert.png" width="70%">
+			<p>
+				If we insert \(P\) into \(C_R\) we will get the following:
+			</p>
+			<img src="new-point-after-insert-before-delete.png" width="70%">
+			<p>
+				In this case the resulting polygon is not convex. We need to erase one point, specifically the one to the left and up of \(P\) to make the polygon convex:
+			</p>
+			<img src="new-point-after-first-delete.png" width="70%">
+			<p>
+				But that wasn't enough. There are cases, such as this one, where we would need to delete more than one point to ensure that the temporary convex hull stays convex. The naive way of tackling this is to repeatedly erase any point whose interior angle is larger than \(180^\circ\), until there are not more points to erase. This is obviously slow and inefficient. To improve the erasing process, observe the following Lemma:
+			</p>
+			<b><u>Lemma</u></b>
+			<p class="statement-block">
+				Let \(A, B, C\) be two consecutive points of \(C_R\) or \(C_L\) such that \(C_y \leq B_y \leq A_y \leq P_y\) or \(C_y \geq B_y \geq A_y \geq P_y\), where\(P\) is a point outside \(C_R\) / \(C_L\) respectively. Then \(\measuredangle{CBP} \leq \measuredangle{BAP}\), where \(\measuredangle{CBP}\) and \(\measuredangle{BAP}\) are the interior angles.
+			</p>
+			<u>proof</u>
+			<p class="proof-block">
+				<img src="lemma.png" width="70%">
+				The above figure is an example of the second case, i.e. \(C_y \geq B_y \geq A_y \geq P_y\) (given that the y-coordinate increase upwards), where the points \(A, B, C\) are from \(C_R\). For the remaining three cases the lemma will be true by symmetry. <br>
+				Since \(C_y \geq B_y \geq A_y \geq P_y\) and \(C_R\) is the right side of the temporary convex hull, it must be convex and \(C_x \leq B_x \leq A_x\). Also, \(P\) outside of the temporary convex hull, so \(A_x \leq P_x\). <br>
+				We extend the line segment \(\overline{BC}\) and takes its intersection \(T\) with \(\overline{AP}\). Now, from the order of coordinates that was stated above, \(|BP| \geq |TP|\) which means that \(\measuredangle PTB \leq \measuredangle PBC\). But \(\measuredangle PAB \leq \measuredangle PTB\). Thus, \(\measuredangle PAB \leq \measuredangle PBC\) and taking there supplement angles we arrive at the statement we are proving: \(\measuredangle CBP \leq \measuredangle BAP\).
+			</p>
+			<p>
+				This Lemma is the core of the optimization of the erasing part. If we have three consecutive points \(A, B, C\) of the convex hull that are, say, both in \(C_R\) and above \(P\) with \(P_y \leq A_y \leq B_y \leq C_y\), then if we delete \(A\), it is essentially the same as drawing the line segment \(\overline{PB}\) and discarding \(A\). Now, whether we need to erase \(B\) too comes down to whether the angle \(\measuredangle CBP\) is smaller or larger than \(180^\circ\). But, from the <b>Lemma</b> we have shown that the interior angles the line segments of \(C_R\) and \(C_L\) with respect to \(P\) are ordered, with the exact same order as the points of \(C_R\) / \(C_L\) respectively. So, all we need is to find the "first" point of \(C_R\) whose interior angle with respect to \(P\) is larger than \(180^\circ\). Then the following points up to \(P\) will have angles larger than \(180^\circ\), by the <b>Lemma</b>, and so those also need to be erased. Of course this need to be done for both "parts" of \(C_R\) and \(C_L\), i.e. both for the points that are above \(P\) and below \(P\), since the interior angles there are "flipped". <br>
+				Finding this "first" can be done with a simple binary search on \(C_R\) / \(C_L\), since, as discussed above, the interior angle with respect to \(P\) are ordered in \(C_R\) / \(C_L\) respectively.
+			</p>
+			<p>
+				An illustration of this is the following figure:
+				<br><br>
+				<img src="erasing-points.png" width="50%">
+				<br>
+				The red points are the ones that get erased, whereas the green points remain. The "first" points are the ones that are connected with a dashed lines to the new point.
+			</p>
+
+			<h3>Time complexity</h3>
+			<p>
+				The first steps of the algorithm (before the main loop) take \(O(n)\) time. Now, for a point in the set of given points, we need to check whether it is outside the temporary convex hull or not. This is achieved by a simple binary search, which (on average) takes \(O(\log k)\), where \(k\) the size of the temporary convex hull. Now the erasing part. First we find the "first" points to erase. This is again achieved with a binary search which takes \(O(\log k)\) time and then we erase the necessary points. Now, if we use a vector to store the temporary convex hull, we would need \(O(k)\) to erase the points. Keep in mind that the points that we need to erase are in order, i.e. we need to erase a segment of the vector, which in a vector is done in linear time independently of the size of the segment we wish to erase. This would make our algorithm have a worst case time complexity of \(O(nk)\). Now, can we do better? Yes. But we need to use a tree-like structure to store the temporary convex hull. This allows us to drop the erasing time to \(O(\log k)\), which makes the worst time complexity of the algorithm be \(O(n \log k)\). But \(k \leq n\) and so the worst case time complexity is \(O(n\log n)\).
+			</p>
+			<p>
+				I will discuss the way to tackle the problem using binary trees instead of vectors another time, once I write a page on range deletion in binary search trees (this is the main functionality that we need). For now, I have implemented the algorithm in C++ using the naive vector data structure. The points are randomly distributed on a disc (the distribution is uniform). The resulting time the algorithm needed is shown in the table below:
+			</p>
+			<br>
+			<table>
+				<tr>
+					<th># Points</th>
+					<th>Time</th>
+					<th>Samples</th>
+				</tr>
+				<tr>
+					<td>1 000</td>
+					<td>0.33 μs</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>10 000</td>
+					<td> 5.2 μs</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>100 000</td>
+					<td>69.3 μs</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>1 000 000</td>
+					<td>0.88 ms</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>10 000 000</td>
+					<td>6.5 ms</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td><div style="color: red">100 000 000</div></td>
+					<td><div style="color: red">*86.77 ms</div></td>
+					<td><div style="color: red">10</div></td>
+				</tr>
+				<tr>
+					<td><div style="color: red">300 000 000</div></td>
+					<td><div style="color: red">*268.716 ms</div></td>
+					<td><div style="color: red">10</div></td>
+				</tr>
+			</table>
+			<br>
+			<p>
+				*The last two result are off due to limitation of my computer. My system does not have a lot of RAM, so it resorted to using memory from by disc. This is why we observe a sudden jump from in the computing time.
+			</p>
+		</div>
+	</div>
+</body>

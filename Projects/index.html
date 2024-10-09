@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Kostis1101 - Projects</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+	
+	<div id="sidenav-placeholder"></div>
+	
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+	$.get("/sidebar.html", function(data){
+		$("#sidenav-placeholder").replaceWith(data);
+	});
+	</script>
+
+    <div class="main">
+        <p class="about_text">
+            Over the year I have worked on various different project of different sizes. Here is a list of some of those (with not particular order):
+            <ul class="about_text" style="padding-left: 90px; list-style-type: disc;">
+                <li>
+                    <u>Green Elephant</u> <br>
+                    When I was younger I was kind of obsessed with complex numbers, so I through of creating some sort of library that would implement complex numbers and the respective functions. At first I was planing on implementing only very basic complex arithmetic, but I ended up creating much more. The only language I new that the time was C# (and not well at all), so that's what I worked with. <br>
+                    Working on the project helped me understand complex number and there behaviour much better and allowed me to build a strong intuition, as I was actively trying to understand how complex numbers work from an algorithmic point of view (e.g. what does taking a logarithm do to a complex number and how do I tell the computer to compute that?). <br>
+                    You can find the result on <a href="https://github.com/kostis1101/Green-Elephant" style="font-size: 32px; color:darkblue">github</a>.
+                </li><br>
+                <li>
+                    <u>United Squares</u> <br>
+                    In 2018 I got into game development using Unity. This lead to me creating a game in 2019 called "United Squares". It's a very simple 2D-Game where you have to fight an enemy who get's increasingly more powerful. At you disposal you have two types of weapons, a normal "gun" and a grenade and you can also build to protect yourself. The goal is to survive the longest and collect as many points as possible. The music was created by a good friend of mine that at that time was into music production. You can find him <a href="https://www.instagram.com/horizonmusiic/" style="font-size: 32px; color:darkblue">here</a>.<br>
+                    I currently don't have any downloads available, but you can enjoy a primitive (i.e. the kind that you would expect from a young teen) trailer I created back then on <a href="https://youtu.be/7sCFoSg7Z0Q" style="font-size: 32px; color:darkblue">youtube</a>.
+                </li> <br>
+                <li>
+                    <u></u>
+                </li>
+            </ul>
+        </p>
+
+    </div>
+
+</body>

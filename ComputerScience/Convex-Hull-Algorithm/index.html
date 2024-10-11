@@ -148,6 +148,20 @@
 				The first steps of the algorithm (before the main loop) take \(O(n)\) time. Now, for a point in the set of given points, we need to check whether it is outside the temporary convex hull or not. This is achieved by a simple binary search, which (on average) takes \(O(\log k)\), where \(k\) the size of the temporary convex hull. Now the erasing part. First we find the "first" points to erase. This is again achieved with a binary search which takes \(O(\log k)\) time and then we erase the necessary points. Now, if we use a vector to store the temporary convex hull, we would need \(O(k)\) to erase the points. Keep in mind that the points that we need to erase are in order, i.e. we need to erase a segment of the vector, which in a vector is done in linear time independently of the size of the segment we wish to erase. This would make our algorithm have a worst case time complexity of \(O(nk)\). Now, can we do better? Yes. But we need to use a tree-like structure to store the temporary convex hull. This allows us to drop the erasing time to \(O(\log k)\), which makes the worst time complexity of the algorithm be \(O(n \log k)\). But \(k \leq n\) and so the worst case time complexity is \(O(n\log n)\).
 			</p>
 			<p>
+				A more accurate time complexity analysis would look at the asymptotic behavior of the expected value of \(k\) with respect to \(n\). The problem is that the expected value of \(k\) depends on the distribution of the points, given of course that they are even randomly distributed. Making that assumption, we have the following two results:
+				<ol>
+					<li>
+						Thanks to Rényi and Sulanke <a href="https://doi.org/10.1007/BF00535300">[1]</a> we know that \(k = O(m \log n)\), when the points are chosen with uniform distribution from a convex polygon with \(m\) vertices.
+					</li>
+					<li>
+						Thanks to Raynaud <a href="https://doi.org/10.2307/3212146">[2]</a> we know that \(k = O(n^{1/3})\), when the points are chosen with a uniform distribution from a disc.
+					</li>
+				</ol>
+				In the first case, the average time complexity of the algorithm becomes \(O(n \log \log n \log m)\), or simply \(O(n \log \log n)\), and in the second case it becomes \(O(n \log n)\).<br>
+				Sariel Har-Peled presented simpler proofs of both above mentioned results (and more) in his paper (2011) <a href="https://arxiv.org/abs/1111.5340">[3]</a>.
+			</p>
+			<h3>Benchmarks</h3>
+			<p>
 				I will discuss the way to tackle the problem using binary trees instead of vectors another time, once I write a page on range deletion in binary search trees (this is the main functionality that we need). For now, I have implemented the algorithm in C++ using the naive vector data structure. The points are randomly distributed on a disc (the distribution is uniform). The resulting time the algorithm needed is shown in the table below:
 			</p>
 			<br>
@@ -197,6 +211,19 @@
 			<p>
 				*The last two result are off due to limitation of my computer. My system does not have a lot of RAM, so it resorted to using memory from by disc. This is why we observe a sudden jump in the computing time.
 			</p>
+			<h3>References</h3>
+			<ul>
+				<li>
+					<a href="https://doi.org/10.1007/BF00535300">[1]</a> Rényi, A., Sulanke, R. über die konvexe Hülle von n zufällig gewählten Punkten. Z. Wahrscheinlichkeitstheorie verw Gebiete 2, 75–84 (1963). https://doi.org/10.1007/BF00535300
+					
+				</li>
+				<li>
+					<a href="https://doi.org/10.2307/3212146">[2]</a> Raynaud, H. “Sur L’Enveloppe Convexe Des Nuages De Points Aleatoires Dans Rn. I.” Journal of Applied Probability 7, no. 1 (1970): 35–48. https://doi.org/10.2307/3212146.
+				</li>
+				<li>
+					<a href="https://arxiv.org/abs/1111.5340">[3]</a> Sariel Har-Peled, On the Expected Complexity of Random Convex Hulls*, (2011). https://doi.org/10.48550/arXiv.1111.5340
+				</li>
+			</ul>
 		</div>
 	</div>
 </body>

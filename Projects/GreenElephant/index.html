@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Kostis1101 - Green Elephant</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+	$.get("/sidebar.html", function(data){
+		$("#sidenav-placeholder").replaceWith(data);
+	});
+	</script>
+
+    <div class="main">
+        <div class="main_text">
+            <h1 style="text-align: center;">Green Elephant</h1>
+            <div class="math_text">
+                When I was younger I was kind of obsessed with complex numbers, so I through of creating some sort of library that would implement complex numbers and the respective functions. At first I was planing on implementing only very basic complex arithmetic, but I ended up creating much more. The only language I new that the time was C# (and not well at all), so that's what I worked with. <br> Working on the project helped me understand complex number and there behaviour much better and allowed me to build a strong intuition, as I was actively trying to understand how complex numbers work from an geometric and algorithmic point of view (e.g. what does taking a logarithm do to a complex number and how do I tell the computer to compute that?). <br>
+                You can find the result on <a href="https://github.com/kostis1101/Green-Elephant">github</a>.
+            </div>
+        </div>
+    </div>
+</body>

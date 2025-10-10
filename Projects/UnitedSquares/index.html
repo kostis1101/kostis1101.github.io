@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Kostis1101 - United Squares</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script>
+	$.get("/sidebar.html", function(data){
+		$("#sidenav-placeholder").replaceWith(data);
+	});
+	</script>
+
+    <div class="main">
+        <div class="main_text">
+            <h1 style="text-align: center;">United Squares</h1>
+            <div class="math_text">
+                In 2018 I got into game development using Unity. This lead to me creating a game called "United Squares" about a year later. It's a very simple 2D-Game where you have to fight an enemy who get's increasingly more powerful. At you disposal you have two types of weapons, a normal "gun" and a grenade and you can also build to protect yourself. The goal is to survive the longest and collect as many points as possible. The music was created by a good friend of mine that at that time was into music production. You can find him <a href="https://www.instagram.com/horizonmusiic/">here</a>.<br>
+                I currently don't have any downloads available <star-nodes>Why would anyone want it?</star-nodes>, but you can enjoy a primitive (i.e. the kind that you would expect from a young teen) trailer I created back then on <a href="https://youtu.be/7sCFoSg7Z0Q">youtube</a>.
+            </div>
+        </div>
+    </div>
+</body>

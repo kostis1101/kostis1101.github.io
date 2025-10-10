@@ -67,6 +67,8 @@ h2 {
 	margin-bottom: 50px;
 }
 
+
+
 .statement {
 	font-weight: bold;
 	padding-top: 10px;
@@ -85,6 +87,24 @@ body {
 	background-color: rgb(220, 215, 204);
 }
 
+
+.main_text a, .link_menu a {
+	color: black;
+}
+
+.math_text a {
+	color: rgb(61, 85, 141)
+}
+
+.main_text, .link_menu > ul > li {
+	margin: 10px 0;
+}
+
+/* for the "link hubs" */
+.main_text, .link_menu {
+	font-size: 20px;
+	margin: 50px 5% 0 3%
+}
 
 /* credit: https://stackoverflow.com/a/15703312/14242442 */
 .tooltip {

@@ -63,10 +63,17 @@ h2 {
 	margin-left: calc(max(50% - 500px, 0px));
 	margin-right: calc(max(50% - 500px, 0px));
 	text-align: justify;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-family: Verdana, Geneva, Tahoma, serif;
+	/* font-family: 'Times New Roman', Times, serif; */
 	margin-bottom: 50px;
+	/* font-size: 14pt; */
 }
 
+
+.main_text {
+	margin: 50px 10% 50px 10%;
+	font-size: 16pt
+}
 
 
 .statement {
@@ -96,12 +103,12 @@ body {
 	color: rgb(61, 85, 141)
 }
 
-.main_text, .link_menu > ul > li {
+.main_text > ul > li, .link_menu > ul > li {
 	margin: 10px 0;
 }
 
 /* for the "link hubs" */
-.main_text, .link_menu {
+.link_menu {
 	font-size: 20px;
 	margin: 50px 5% 0 3%
 }

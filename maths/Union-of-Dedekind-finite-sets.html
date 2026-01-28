@@ -32,10 +32,10 @@
 	<div class="main">
 		Date: 21.09.2024
 		
-		<h1 style="text-align:center">The Union of two Dedekind Finite Sets is Dedekind Finite (without AC)</h1>
-		<br>
 		<div class="math_text">
 			<p>
+				<h1 style="text-align:center">The Union of two Dedekind Finite Sets is Dedekind Finite (without AC)</h1>
+				<br>
 				I was reading the book "Notes on Set Theory" by Yiannis Moschovakis. At some point (Chapter 4), the notion of Dedekind finite sets introduced. It was mentioned that most properties of Dedekind finite and Dedekind infinite sets require the Axiom of Choice to be proven. One exception is the following proposition:
 				<blockquote style="text-align: center; font-style:italic">
 					The union of two Dedekind finite set is Dedekind finite.
@@ -129,15 +129,15 @@
 					\end{cases}
 				\]
 				gives us a bijection from \(B\) to a proper subset of it, thus contradicting that \(B\) is finite.
-				</star-node>, \(C\) would be finite as subset of the finite set \(B\). And so we could just prove that the union \(A \cap C\) if finite and that would automatically imply that the union \(A \cap B\) is also finite. So from now on we will suppose that \(A \cap B = \emptyset\).
+				</star-node>, \(C\) would be finite as subset of the finite set \(B\). And so we could just prove that the union \(A \cup C\) if finite and that would automatically imply that the union \(A \cup B\) is also finite. So from now on we will suppose that \(A \cap B = \emptyset\).
 			</p>
 			<p>
 				To prove the Theorem we will suppose, toward a contradiction, that there union is infinite. That is that there exists a proper subset \(S \subset A \cup B\) and a bijection \(f: A \cup B \rightarrowtail\kern-1.9ex\twoheadrightarrow S\). <br>
-				Since \(S\) is a proper subset of \(A \cup B\), there exists an element \(x_0 \notin S\). Without loss of generality, suppose \(x_0 \in B\).
+				Since \(S\) is a proper subset of \(A \cup B\), there exists an element \(x_0 \in A \cup B\) such that \(x_0 \notin S\). Without loss of generality, suppose \(x_0 \in B\).
 			</p>
 			<h4><u>Definition 1</u></h4>
 			<p class="statement-block">
-				For every \(x \in A \cup B\) let \(E(x)\) denote the set that contains \(x\) and is closed under \(f\), i.e. \(E(x) = \{X \subseteq A \cup B \ | \ x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(G(x)\) denote the set \(G(x) = \bigcap E(x)\)
+				For every \(x \in A \cup B\) let \(E(x)\) denote the family of sets that contain \(x\) and are closed under \(f\), i.e. \(E(x) = \{X \subseteq A \cup B \ | \ x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(G(x)\) denote the set \(G(x) = \bigcap E(x)\)
 			</p>
 			Let's take a look at a couple of properties of the above defined sets:
 			<h4><u>Property 1</u></h4>
@@ -158,9 +158,9 @@
 				\]
 				Observe, though, that the implication \(y \in X \Longrightarrow f(y) \in X\) doesn't hold only for \(y \in G(x)\). Indeed, if \(y \notin G(x)\) then \(y \notin X\) and so trivially \(y \in X \Longrightarrow f(y) \in X\). This means, that:
 				\[
-					x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)
+					x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)
 				\]
-				and so \(X \in E(x)\). But \(G(x) \bigcap E(x) \ \Longrightarrow\ G(x) \subseteq X\). This, together with \(X \subseteq G(x)\), implies \(X = G(x)\).
+				and so \(X \in E(x)\). But \(G(x) = \bigcap E(x) \ \Longrightarrow\ G(x) \subseteq X\). This, together with \(X \subseteq G(x)\), implies \(X = G(x)\).
 			</p>
 			<div class="qed-square"></div>
 			<br>
@@ -170,11 +170,11 @@
 			</p>
 			<u>proof</u>
 			<p class="proof-block">
-				All we need to prove is that \(x \in G(x)\) and that \(y \in G(x) \Longrightarrow f(y) \in G(x)\). The first is quite easy to see, since all the set in \(E(x)\) contain \(x\) and so does their intersection. For the second part, suppose \(y \in G(x)\). That means that \(\forall X \in E(x), \ y \in X\). But that means that \(f(y) \in X, \ \forall X \in E(x)\) and so \(f(y) \in G(x)\).
+				All we need to prove is that \(x \in G(x)\) and that \(y \in G(x) \Longrightarrow f(y) \in G(x)\). The first is quite easy to see, since all the sets in \(E(x)\) contain \(x\) and so does their intersection. For the second part, suppose \(y \in G(x)\). That means that \(\forall X \in E(x), \ y \in X\). But that means that \(f(y) \in X, \ \forall X \in E(x)\) and so \(f(y) \in G(x)\).
 			</p><div class="qed-square"></div>
 			<br>
 			<p>
-				Let \(\mathcal{E} = G(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = \bigcap \mathcal{E}\).
+				Let \(\mathcal{E} = E(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = \bigcap \mathcal{E}\).
 			</p>
 			<br>
 			<h4><u>Lemma 1</u></h4>

@@ -30,7 +30,8 @@
 	</script>
 
 	<div class="main">
-		Date: 21.09.2024
+		Date: 21.09.2024<br>
+		Last edit: 16.02.2026
 		
 		<div class="math_text">
 			<p>
@@ -43,56 +44,7 @@
 				After a couple of days I managed to formulate a proof of the above statement without relying on the axiom of choice (<b>AC</b>). In this page I will present this proof.
 			</p>
 			<h2>Setting things up</h2>
-			Lets get over axioms and definitions first. I will follow the same convention that the above mentioned book follows. I will, thus, base my proof on the following 6 axioms of Zermelo:
-			<ul>
-				<li><u>Axiom of extensionality</u> <br>
-					<i>Two sets are equal if and only if they have the exact same elements, i.e.</i>
-					\[
-						A = B \ \Longleftrightarrow\ \ (\forall x)(x \in A \ \Longleftrightarrow\ \ x \in B)
-					\]
-				</li>
-				<li><u>Empty Set and Pairset Axiom</u> <br>
-					<i>There exists the empty set with no elements and for each objects \(x, y\) there exists a set which contains exactly these two, i.e.</i>
-					\[
-						(\forall x, y)(\exists A)(x \in A \ \land \ y \in A \ \land \ (\forall z \in A)(z = x \ \lor \ z = y))
-					\]
-				</li>
-				<li><u>Axiom of Separation</u> <br>
-					<i>For every set and every definite condition there exists a set with elements the elements of the set that satisfy the condition, i.e. (in second order logic):</i>
-					\[
-						(\forall S)(\forall P)(\exists A)(\forall x)(x \in A \ \Longleftrightarrow\ x \in S \ \land \ P(x))
-					\]
-				</li>
-				<li><u>Powerset Axiom</u> <br>
-					<i>For every set there exists a set which contains all the subsets of the set, i.e.</i>
-					\[
-						(\forall A)(\exists\ \mathcal{P}(A))(\forall X)(X \in \mathcal{P}(A) \ \Longleftrightarrow\ X \subseteq A)
-					\]
-					<star-node>
-						The subset relation \(\subseteq\) is defined as follows:
-						\[
-							A \subseteq B \ \Longleftrightarrow\ (\forall x)(x \in A \ \Longleftrightarrow\ x \in B)
-						\]
-					</star-node>
-				</li><br>
-				<li><u>Union Set Axiom</u> <br>
-					<i>For every family of sets there exists a set that contains exactly the elements that belong to at least one of the sets in the family, i.e.</i>
-					\[
-						(\forall F)(\exists A)(\forall x)(x \in A \ \Longleftrightarrow\ (\exists S \in F)(x \in S))
-					\]
-				</li>
-				<li><u>Axiom of Infinity</u> <br>
-					<i>There exists a set \(I\) that contains the empty set and the singleton of each of its members, i.e.</i>
-					\[
-						\emptyset \in I \ \land\ (\forall x \in I)(\{x\} \in I)
-					\]
-					We will not going to use this axiom. I just included it here for completion.
-				</li>
-			</ul>
-			<br>
-			<p>
-				Now let us define Dedekind infinite sets. 
-			</p>
+			
 			<h4><u>Definition</u></h4>
 			<p style="font-style: italic; padding-left: 20px;">
 				A set \(A\) is called Dedekind infinite if there exists a proper subset o \(A\) that is equinumerus to \(A\), that is, there exists proper subset \(X \subset A\) and bijection \(f: X \rightarrowtail\kern-1.9ex\twoheadrightarrow A\).
@@ -116,7 +68,7 @@
 					</star-node>
 				</li>
 				<li>
-					If \(f\) is a function, then \(f(a)\) will be the value of the function evaluated at \(a\), whereas \(f[A]\) will be the image of \(f\) on the set \(A\).
+					Following Moschovakis, if \(f\) is a function, then \(f(a)\) will be the value of the function evaluated at \(a\), whereas \(f[A]\) will be the image of \(f\) on the set \(A\).
 				</li>
 			</ul>
 			<h2>Proof</h2>
@@ -132,12 +84,14 @@
 				</star-node>, \(C\) would be finite as subset of the finite set \(B\). And so we could just prove that the union \(A \cup C\) if finite and that would automatically imply that the union \(A \cup B\) is also finite. So from now on we will suppose that \(A \cap B = \emptyset\).
 			</p>
 			<p>
-				To prove the Theorem we will suppose, toward a contradiction, that there union is infinite. That is that there exists a proper subset \(S \subset A \cup B\) and a bijection \(f: A \cup B \rightarrowtail\kern-1.9ex\twoheadrightarrow S\). <br>
+				To prove the Theorem we will suppose, toward a contradiction, that there union is infinite. That is that there exists a proper subset \(S \subsetneq A \cup B\) and a bijection \(f: A \cup B \rightarrowtail\kern-1.9ex\twoheadrightarrow S\).<br>
 				Since \(S\) is a proper subset of \(A \cup B\), there exists an element \(x_0 \in A \cup B\) such that \(x_0 \notin S\). Without loss of generality, suppose \(x_0 \in B\).
 			</p>
 			<h4><u>Definition 1</u></h4>
 			<p class="statement-block">
-				For every \(x \in A \cup B\) let \(E(x)\) denote the family of sets that contain \(x\) and are closed under \(f\), i.e. \(E(x) = \{X \subseteq A \cup B \ | \ x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(G(x)\) denote the set \(G(x) = \bigcap E(x)\)
+				For every \(x \in A \cup B\) let \(E(x)\) denote the family of sets that contain \(x\) and are closed under \(f\), i.e.
+				\[E(x) = \{X \subseteq A \cup B \ | \ x \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\]
+				and \(G(x)\) denote the set \(G(x) = \bigcap E(x)\)
 			</p>
 			Let's take a look at a couple of properties of the above defined sets:
 			<h4><u>Property 1</u></h4>
@@ -147,7 +101,7 @@
 					x \in X \ \land\ (\forall y \in G(x))(y \in X \Longrightarrow f(y) \in X) \ \Longrightarrow\ X = G(x)
 				\]
 				<star-node>
-					One can prove that the system \((G(x), x, f)\) satisfies the Peano axioms and thus is a model of natural numbers. The only thing that we are going to need here, tho, is induction.
+					One can prove that the system \((G(x), x, f)\) satisfies the Peano axioms and thus is a model of natural numbers. The only thing that we are going to need here, though, is induction.
 				</star-node>
 			</p>
 			<u>proof</u>
@@ -174,9 +128,8 @@
 			</p><div class="qed-square"></div>
 			<br>
 			<p>
-				Let \(\mathcal{E} = E(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = \bigcap \mathcal{E}\).
+				Let \(\mathcal{E} = E(x_0) = \{X \subseteq A \cup B \ | \ x_0 \in X \ \land\ (\forall y)(y \in X \Longrightarrow f(y) \in X)\}\) and \(Q = G(x_0) = \bigcap \mathcal{E}\).
 			</p>
-			<br>
 			<h4><u>Lemma 1</u></h4>
 			<p class="statement-block">
 				For every \(a, b \in Q\):
@@ -197,7 +150,7 @@
 					\end{flalign*}
 				\]
 				So the implication \(x \in R \Longrightarrow\ f(x) \in R\) is true for all \(x \in G(b)\). <br>
-				By <b>Lemma 1</b> the system \((G(b), b, f)\) satisfies the induction principal. But the hypothesis of the induction principal for the subset \(R\) is satisfied. And so \(R = G(b)\)<br>
+				By <b>Lemma 1</b> the system \((G(b), b, f)\) satisfies the induction principal. But the hypothesis of the induction principal for the subset \(R\) is satisfied. And so \(R = G(b)\).<br>
 			</p>
 			<div class="qed-square"></div>
 			<br>

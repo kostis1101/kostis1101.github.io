@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Union of Dedekind finite sets - Kostis 1101</title>
+
+	<div id="placeholder"></div>
+</head>
+<body>
+
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	
+	<script>
+		$.get("/header.html", function(data) {
+			$("#placeholder").replaceWith(data);
+		})
+	</script>
+
+	<script>
+		$.get("/sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+
+	<script src="/javascript/tooltip.js">
+		
+	</script>
+
+    <div class="main">
+		Date: 17.02.2026
+		
+		<div class="math_text">
+            <h1 style="text-align:center">Binary Search on the Real Numbers</h1>
+            <h2>Main Idea</h2>
+            <p>
+                When it comes to proving existence results, I very often find myself trying to come with some "construction". And, possibly due to my background in computer science, this construction is often a sort of "algorithm" or a process which constructs the desired mathematical object. On of the most common tricks that I came up with is something that resembles binary search in complete spaces, specifically the real numbers.
+            </p>
+            <p>
+                The main idea of this is the following: Suppose that you want to prove the existence of some real number \(x \in \mathbb{R}\) that has some property \(P(x)\). We start with a closed interval \(I_0 = [a_0, b_0] \subset \mathbb{R}\) as our "initial guess", which "should" contain an element with the property \(P\). We then split \(I_0\) into two sub-intervals and pick the sub-interval that "should" contain elements with the desired property. We then repeat the same for the selected interval and continue. This is very similar to binary search. If, instead of the real, our search space was some finite set with some total ordering, this would in fact be binary search. Of course the problem with this in the reals is that if we terminate the procedure after any finite number of steps we will end up with an close interval which contains infinitely many points. To circumvent this, we can allow the procedure to run for \(\omega\) steps, and (under certain conditions) the "algorithm" will converge to the desired point.
+            </p>
+            <p>
+                The above intuitive description of the idea is not at all rigorously formulated. And frankly it can't be. This isn't a theorem of sorts, but a way to prove existence results and its format details are heavily dependent on the specific cases. For example, when I say that \(I_0\) "should" contain some element with property \(P\), I appeal to our intuition to construct \(I_0\) (otherwise, if we have already proved that \(I_0\) contains a point with property \(P\) then what's the point in proving its existence?). An (also not very rigorously and somewhat trivial) example follows to clarify things. A more careful explanation and more rigorous examples will follow afterwards.
+            </p>
+            <h3><u>Example</u> The existence of \(\sqrt 2\)</h3>
+            <p>
+                Let's say that we want to prove the stupidly simple proposition that the polynomial \(x^2 - 2\) has a root that is greater than 0 without directly appealing to continuity. We start by setting an initial guess interval \(I_0\). Trivially we can set the lower bound of \(I_0\) to be 0 since we want the root to be positive. For the upper bound we appeal to our intuition. Intuitively, if a root \(\alpha > 0\) existed (i.e. \(\alpha^2 = 2\)), then it should be less than 2, since if it were \(a \ge 2\) then it would \(a^2 \ge 4\) which is a contradiction. So, if a root exists, it <b>should</b> be less than 2, which justifies setting \(I_0 = [0, 2]\).<br>
+                <br>
+                We continue by defining the procedure at each step. Suppose at step \(n\) we have the interval \(I_n = [a_n, b_n]\). To get the next interval \(I_{n + 1}\) we do the following:
+                <ol>
+                    <li>
+                        Set \(m = \frac {a_n + b_n} 2\) and calculate \(y_m = m^2 - 2\)
+                    </li>
+                    <li>
+                        In typical binary search fashion, we check \(y_m\) against 0. If \(y_m > 0\) then the root we are searching for has to be less than \(m\). Similarly, if \(y_m < 0\) then the root we are searching for has to be greater than \(m\).
+                    </li>
+                    <li>
+                        So, we set the following for \(I_{n + 1}\):
+
+                        \[
+                        I_{n + 1} = [a_{n + 1}, b_{n + 1}] = 
+                            \begin{cases} 
+                                [a_n, m] & y_m > 0 \\
+                                [m, b_n] & y_m \le 0
+                            \end{cases}
+                        \]
+                    </li>
+                </ol>
+
+                We repeat this procedure producing more and more intervals \(I_n = [a_n, b_n]\). Notice that the length drops exponentially for n: \(l(I_n) = 2^{-n}l(I_0)\). Thus, \(b_n - a_n = l(I_n) \rightarrow 0\), as \(n \rightarrow \infty\). Also notice that \(a_n\) is increasing and \(b_n\) is decreasing. From this we conclude that \(\lim a_n = \lim b_n\).<br>
+                From the construction it is also easy to see that \(a_n^2 - 2 \le 0\) and \(b_n^2 - 2 > 0\). Taking limits we have:
+                
+                \[
+                    \begin{align*}
+                        \lim a_n^2 - 2 \le 0 \\
+                        \lim b_n^2 - 2 \ge 0
+                    \end{align*}
+                \]
+
+                Since the limits of \(a_n\) and \(b_n\) are equal, the above limits must also be equal. From the inequalities it follows that
+                
+                \[\lim a_n^2 - 2 = \lim b_n^2 - 2 = 0\]
+                
+                It follows that the root we are searching for is equal to \(\lim a_n = \lim b_n\). You might notice that one can generalize this argument to prove the intermediate value theorem. A rigorous such proof is given later.
+            </p>
+            <div class="qed-square"></div>
+            <br>
+            <h3>Completeness</h3>
+            <p>
+                One of the things I want to argue in this post is not only that this works, but that there is something fundamental about the real numbers that allows it to work. Notice that the above proposition is not true in the rational numbers. Obviously, the thing that we have in the reals that enables the proof is completeness. In this case, completeness meant that all Cauchy sequences converge to a point in the reals. Below we give a different, but equivalent, definition of completeness of the reals that is closer to the "algorithmic" and "constructed" nature of the technique.
+            </p>
+            <h4><u>Definition:</u> Completeness of the Real Numbers</h4>
+            <p class="statement-block">
+                Let \(I_n = [a_n, b_n] \subset \mathbb{R}\) be a decreasing sequence of closed intervals, such that \(I_{n + 1} \subset I_n\) and \(b_n - a_n \rightarrow 0\), as \(n \rightarrow \infty\). Then the intersection of all those intervals is a singleton set, i.e. there exactly one real number \(r \in \mathbb{R}\) for which \[r \in \bigcap_n I_n\]
+            </p>
+            <p>
+                I like the above definition of completeness more, since we can interpret the idea from a more algorithmic point of view. In "binary search" proofs, we start with an initial guess interval \(I_0\) and successively "close in" or smaller and smaller intervals by splitting the previous ones according to some rule. This produces a decreasing sequence of closed intervals \(I_n\) whose lengths are being halved at each step. This is analogous to the search space being halved at each step in the canonical binary search algorithm. Of course, in our case, each interval still contains infinitely many possible points that we have to "check". But, applying the above variation of completeness, we see that after infinitely many steps, we end up at with exactly one point.
+            </p>
+            <p>
+                In the following example we are going to use "binary search" together with the above variation of completeness to prove some standard results from analysis.
+            </p>
+
+            <h2>Some Examples</h2>
+
+            <h3>Compact Sets</h3>
+
+            <p class="statement-block">
+                Let \(S \subset \mathbb{R}\) be a closed and bounded set. Then, every infinite sequence in \(S\) has a convergent subsequence, i.e. if \(a_n \in S\) an sequence in \(S\), then there exists a subsequence \(a_{n_k}\) that converges.
+            </p>
+            <u>proof</u>
+            <p>
+                Fix some closed and bounded set \(S \subset \mathbb{R}\) and sequence \(a_n \in S\). The idea here is to do binary search to search for something. This might seem a bit weird at first. The proposition deals with the existence of a subsequence, not of a point. And binary search (at least the way I presented it here in the reals) only searches for specific individual points. So how can we use it to search for subsequences?
+            </p>
+            <p>
+                Well, we won't, if we make this simple observation: A sequence has a convergent subsequence if and only if there is a accumulation point. By accumulation point here I mean that there exists a point whose neighbourhoods all (no matter how small) contain points of the sequence (apart from the accumulation point itself). Intuitively, there is a point where the sequence comes arbitrarily close to it. The idea then is to search for such a point.
+            </p>
+            <p>
+                Since \(S\) is bounded, there is some interval \([u, v] \supseteq S\). Intuitively again, since \(S\) is close, we would expect the accumulation point to be contained in \(S\) and thus in \([u, v]\). So, we start with the initial guess interval of \(I_0 = [u, v]\) which "should" contain the accumulation point.
+            </p>
+            <p>
+                We then define a recursive procedure which produces the converging intervals. Suppose we have the interval \(I_n = [u_n, v_n]\) after n steps and we split that interval in the middle into two subintervals \([u_n, m]\) and \([m, v_n]\), where \(m = (u_n + v_n) / 2\). We have to define systematic way to choose one of the two subintervals to "reduce" the search space. Since we are searching for an accumulation point, when can choose the subinterval that contains infinitely many elements of the sequence. That is:
+
+                \[
+                    I_{n + 1} = [u_{n + 1}, v_{n + 1}] =
+                    \begin{cases}
+                        [u_n, m], \quad \text{if there are infinitely many } a_n \text{ with } a_n \in [u_{n + 1}, m] \\
+                        [m, v_m], \quad \text{otherwise}
+                    \end{cases}
+                \]
+
+                This choice effectively restricts the sequence in some smaller interval such that the restriction still consists of infinitely many points. From here on the proof it trivial. The intervals \(I_n\) are closed and decreasing, so there exists exactly one point \(r \in \bigcap_n I_n\). We then construct a subsequence of \(a_n\), \(b_n\), such that \(b_n \in I_n\) <star-node>For rigour's sake, we can set \(b_n = a_k\) where \(k = min\{m \ | \ a_m \in I_n\}\)</star-node>. Then \(b_n \leftarrow r\) and so \(b_n\) is a subsequence we are after.
+            </p>
+            <div class="qed-square"></div>
+            <br>
+
+            <h3>The Intermediate Value Theorem</h3>
+            <p class="statement-block">
+                Given a continuous function \(f: [a, b] \rightarrow \mathbb{R}\) on the interval \([a, b]\), set \(f_0 = min(f(a), f(b))\) and \(f_1 = max(f(a), f(b))\). Then, the image of \(f\) is a closed interval with \(f([a, b]) = [f_0, f_1]\).
+            </p>
+            <u>proof</u>
+            <p>
+                The proof is divided into two parts: First we prove that f is bounded and the supremum and infimum are value of the function at points of the interval \([a, b]\). Second, we prove that the image of \(f\) is an interval itself.
+            </p>
+            <p>
+                For the first part, we are going to perform binary search to find the points in the interval \([a, b]\) which, when evaluated at \(f\), gives has the largest value. This is fairly simple. We start with the interval \(I_0 = [a, b]\) and recursively split the interval into two and choose the one whose image has the largest supremum. For formally, if \(I_n = [a_n, b_n]\) and \(m = \frac {a_n + b_n} 2\), then we define the following recursion:
+                \[
+                    I_{n + 1} = [a_{n + 1}, b_{n + 1}] = 
+                    \begin{cases}
+                        [a_n, m],&&\text{if } \sup f([a_n, m]) \ge \sup f([m, b_n]) \\
+                        [m, b_n],&&\text{otherwise}
+                    \end{cases}
+                \]
+                From here, the completeness guaranties us that the intersection of all intervals contains exactly one point \(r \in \bigcap_n I_n\). All we wanna prove now is that \(f(r) = \max_{x \in [a, b]} f(x)\). For this we have to use the continuity of \(f\).
+            </p>
+            <p>
+                Notice the following someone obvious property:
+                    \[\sup f([a_n, b_n]) = \max\{\sup f([a_n, m]), \sup f([m, b_n])\}\]
+
+                From the above recursion we have:
+                    \[\sup f(I_{n + 1}) = \sup f(I_n)\]
+                
+                and by a simple induction:
+                    \[\sup f(I_n) = \sup f(I_0), \ \forall n\]
+
+                Fix a small \(\epsilon > 0\). We have that, for all \(n\) there exists some \(x_n \in I_n\) such that:
+                    \[f(x_n) - \epsilon > \sup f(I_n) = \sup f(I_0)\]
+                
+                It is obvious that the sequence \(x_n\) <star-node>Assuming the axiom of choice (we are doing analysis after all)</star-node> converges to \(r\). From continuity if follows that:
+                \[
+                    \lim f(x_n) = f(r)
+                \]
+                And from the inequality \(f(x_n) - \epsilon > \sup f(I_0)\) it follows that:
+                    \[f(r) - \epsilon > \sup f(I_0) \ \Longleftrightarrow\ f(r) > \epsilon + \sup f(I_0)\]
+                
+                The above inequality is true for all \(\epsilon > 0\). As \(\epsilon \rightarrow 0\) we get that \(f(r) \ge \sup f(I_0)\). But trivially \(f(r) \le \sup f(I_0)\), so:
+                    \[f(r) = f(I_0)\]
+                
+                So, \(f\) has a maximum in the interval \([a, b]\) at point \(r\).
+            </p>
+            <p>
+                Applying the same argument on \(-f\), we get that \(-f\) has a maximum, equiv. \(f\) has a minimum. This concludes the first part of the proof
+            </p>
+            <p>
+                The second part of the proof is even easier. Here, we want to prove that the image is an interval. It suffices to prove that, if \(s, t \in f([a, b])\) with \(s < t\) then for any \([s, t] \subseteq f([a, b])\). That is, \(f\) takes all values between \(s\) and \(t\). The idea here is straight forward: we let \(z \in [s, t]\) be some value and we "search" for a point in the interval \([s, t]\) that takes the value \(z\).
+            </p>
+            <p>
+                So, let \(s, t \in f([a, b])\) with \(s < t\) . Since \(s\) and \(t\) are elements of the image of \(f\), there exist \(a_0\) and \(b_0\) such that \(f(a_0) = s\) and \(f(b_0) = t\). Suppose that \(a_0 < b_0\). The other case is similar.
+            </p>
+            <p>
+                Let \(z \in [s, t]\). We prove that \(z \in f([a, b])\). Set \(I_0 = [a_0, b_0]\) and recursively:
+                \[
+                    I_{n + 1} = [a_{n + 1}, b_{n + 1}] =
+                    \begin{cases}
+                        [a_n, m], && f(m) > z \\
+                        [m, b_n], && f(m) \le z
+                    \end{cases}
+                \]
+                where \(I_n = [a_n, b_n]\) and \(m = \frac {a + b} 2\). The intervals will converge to a point \(r\). Specifically \(a_n \rightarrow r\) and \(b_n \rightarrow r\). From continuity of \(f\) we have that:
+                \[
+                    f(a_n) \rightarrow f(r), \ \text{and} \ f(b_n) \rightarrow f(r) 
+                \]
+                Also notice that \(f(a_0) = s \le z\) and \(z \ge t = f(b_0)\). From the recursive definition above it is easily to see that no matter the case, \(f\) evaluated at the lower bound will at most \(z\), while evaluated at the upper bound will be at least \(z\). This is translated into the following:
+                \[
+                    f(a_n) \le z \ \text{and} \ f(b_n) \ge z
+                \]
+                Taking limits we have that:
+                \[
+                    \lim f(a_n) \le z \ \text{and} \ \lim f(b_n) \ge z
+                \]
+                But \(a_n \rightarrow r\) and \(b_n \rightarrow r\) and from continuity \(\lim f(a_n) = \lim f(b_n) = f(r)\). From the previous inequalities we have:
+                \[f(r) = z\]
+                Thus \(z \in f([a, b])\).
+            </p>
+            <div class="qed-square"></div>
+            <br>
+        </div>
+    </div>
+</body>

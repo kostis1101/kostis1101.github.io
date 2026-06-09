@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Union of Dedekind finite sets - Kostis 1101</title>
+
+	<div id="placeholder"></div>
+</head>
+<body>
+
+	<div id="sidenav-placeholder"></div>
+
+	<script src="//code.jquery.com/jquery.min.js"></script>
+	
+	<script>
+		$.get("/header.html", function(data) {
+			$("#placeholder").replaceWith(data);
+		})
+	</script>
+
+	<script>
+		$.get("/sidebar.html", function(data){
+			$("#sidenav-placeholder").replaceWith(data);
+		});
+	</script>
+
+	<script src="/javascript/tooltip.js">
+		
+	</script>
+
+    <div class="main">
+		Date: 10.06.2026
+		
+		<div class="math_text">
+            <h1 style="text-align:center">Every Markov Probability Matrix has a Positive Eigenvector using Convex Geometry</h1>
+
+            <h4><u>Proposition:</u></h4>
+            <p class="statement-block">
+                Let \(P\) be an \(n \times n\) matrix of non-negative entries with row vectors \((u_i)_{i \le n}\) such that \(\sum_j (u_i)_k = 1\) for all \(i\). Then, there exists an eigenvector \(v\) of non-negative coordinates such that \(v = v P\) and \(\sum_j v_j = 1\).
+            </p>
+            <u>proof</u>
+            <p>
+                Let \(\mathcal{T}: v \mapsto v P\) be the transformation restricted to the simplex \(S = \{x \in \mathbb R^n | \sum_i x_i = 1 \land x_i \ge 0\}\). \(\mathcal T\) maps \(S\) to some simplex \(A = \mathcal T [S] \subseteq S\). Also, \(\mathcal T\) is affine and thus continuous. By the Brouwer fixed point theorem there exists some \(v \in S\) such that \(v = \mathcal T(v) = v P\).
+            </p>
+        </div>
+    </div>
+</body>
